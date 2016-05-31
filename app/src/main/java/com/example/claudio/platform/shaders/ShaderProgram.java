@@ -69,6 +69,10 @@ public abstract class ShaderProgram {
 
     protected abstract void bindAttributes();
 
+    protected void bindAttribute(int attribute, String variableName){
+        GLES20.glBindAttribLocation(programID, attribute, variableName);
+    }
+
     protected void bindAttributes(int attribute, String variableName){
         GLES20.glBindAttribLocation(programID, attribute, variableName);
     }
