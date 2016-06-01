@@ -1,5 +1,7 @@
 package com.example.claudio.platform.manager;
 
+import android.util.Log;
+
 import com.example.claudio.platform.animations.PlayerAnimation;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.entities.Player;
@@ -21,6 +23,7 @@ public class PlayerManager implements Manager{
 
     public PlayerManager(Loader loader){
         player      = new Player(loader);
+        Log.i("point", "PlayerManager: playerCreated");
         animation   = new PlayerAnimation();
         state       = animation.getState();
         direction   = animation.getDirection();

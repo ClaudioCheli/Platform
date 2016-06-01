@@ -1,7 +1,8 @@
 package com.example.claudio.platform.animations;
 
-import manager.DisplayManager;
-import toolBox.Input;
+
+import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.toolBox.Input;
 
 public class PlayerAnimation {
 

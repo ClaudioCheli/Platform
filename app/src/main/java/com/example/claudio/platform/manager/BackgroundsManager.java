@@ -1,5 +1,7 @@
 package com.example.claudio.platform.manager;
 
+import android.util.Log;
+
 import com.example.claudio.platform.animations.PlayerAnimation;
 import com.example.claudio.platform.entities.Background;
 import com.example.claudio.platform.entities.Camera;
@@ -29,6 +31,7 @@ public class BackgroundsManager implements Manager {
     public BackgroundsManager(Loader loader, PlayerManager player, Camera camera){
         leftBackground = new Background(loader, new Vector3f(0, 0, -9f), Util.LEFT);
         rightBackground = new Background(loader, new Vector3f(4f, 0, -9f), Util.RIGHT);
+        Log.i("point", "BackgroundsManager: backgroundsInstantiated");
         backgrounds.add(leftBackground);
         backgrounds.add(rightBackground);
         this.player = player;

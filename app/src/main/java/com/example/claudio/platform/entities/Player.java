@@ -1,5 +1,7 @@
 package com.example.claudio.platform.entities;
 
+import android.util.Log;
+
 import com.example.claudio.platform.R;
 import com.example.claudio.platform.models.RawModel;
 import com.example.claudio.platform.models.TexturedModel;
@@ -40,13 +42,18 @@ public class Player extends Entity{
         this.dimension.x /= 2;
         this.dimension.y /= 2;
         RawModel     model      = loader.loadToVAO(vertices, textureCoords, indices);
+        Log.i("point", "Player: modelCreated");
         ModelTexture texture    = new ModelTexture(loader.loadTexture(PLAYER_TEXTURE));
+        Log.i("point", "Player: textureCreated");
         texture.setNumberOfRows(8);
         TexturedModel texturedModel = new TexturedModel(model, texture);
+        Log.i("point", "Player: texturedModelCreated");
         texturedModel.getTexture().setHasTransparency(true);
         setEntity(texturedModel, 0, new Vector3f(0, 0, -7), dimension,
                 new Vector3f(0,0,0) ,new Vector3f(0.5f,0.5f,0.5f));
+        Log.i("point", "Player: entitySet");
         this.boundingBox = new SquareBoundingBox(loader, dimension, position, true, true);
+        Log.i("point", "Player: boundingBoxCreated");
     }
 
     protected Vector2f calculateDimension(float[] vertices){

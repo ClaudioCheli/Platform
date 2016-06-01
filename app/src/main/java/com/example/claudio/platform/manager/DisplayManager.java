@@ -39,7 +39,7 @@ public class DisplayManager {
         return SystemClock.uptimeMillis()*1000;
     }
 
-    public static float getFrameTimeSecond(){
+    public static float getFrameTimeSeconds(){
         return delta;
     }
 

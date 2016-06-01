@@ -33,10 +33,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
         GLES20.glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         entitiesManager.instantiateEntities(loader);
+        Log.i("point", "GLRenderer: entitiesInstantiated");
         renderer = new MasterRenderer(width, height);
+        Log.i("point", "GLRenderer: rendererInstantiated");
         DisplayManager.start();
+        Log.i("point", "GLRenderer: surfaceCreated");
     }
 
     @Override
@@ -45,6 +49,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         this.height = height;
         this.width  = width;
         renderer.setProjectionMatrix(width, height);
+        Log.i("point", "GLRenderer: surfaceChanged");
     }
 
     @Override
@@ -52,6 +57,5 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         entitiesManager.updateEntities();
         renderer.loadEntities(entitiesManager);
         renderer.render(entitiesManager.getCamera());
-        Log.i("point", "drawFrame");
     }
 }

@@ -1,5 +1,7 @@
 package com.example.claudio.platform.manager;
 
+import android.util.Log;
+
 import com.example.claudio.platform.entities.Camera;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.renderEngine.Loader;
@@ -22,16 +24,23 @@ public class EntitiesManager {
     private List<Entity> entities = new ArrayList<>();
 
     public void instantiateEntities(Loader loader){
-        player      = new PlayerManager(loader);
-        terrains    = new TerrainManager(loader);
-        buttons     = new ButtonsManager(loader);
-        camera      = new Camera(player, buttons, terrains, loader);
-        backgrounds = new BackgroundsManager(loader, (PlayerManager)player, camera);
 
+        player      = new PlayerManager(loader);
+        Log.i("point", "EntitiesManager: playerInstantiated");
+        terrains    = new TerrainManager(loader);
+        Log.i("point", "EntitiesManager: terrainsInstantiated");
+        buttons     = new ButtonsManager(loader);
+        Log.i("point", "EntitiesManager: buttonsInstantiated");
+
+        camera      = new Camera(player, buttons, terrains, loader);
+        Log.i("point", "EntitiesManager: cameraInstantiated");
+        backgrounds = new BackgroundsManager(loader, (PlayerManager)player, camera);
+        Log.i("point", "EntitiesManager: backgroundsInstantiated");
         backgrounds.addInEntityList(entities);
         terrains.addInEntityList(entities);
         player.addInEntityList(entities);
         buttons.addInEntityList(entities);
+        Log.i("point", "EntitiesManager: allEntitiesInstantiated");
     }
 
     public void updateEntities(){

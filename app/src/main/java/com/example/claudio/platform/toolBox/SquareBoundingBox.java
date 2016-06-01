@@ -1,5 +1,7 @@
 package com.example.claudio.platform.toolBox;
 
+import android.util.Log;
+
 import com.example.claudio.platform.renderEngine.Loader;
 
 public class SquareBoundingBox extends BoundingBox{
@@ -16,10 +18,13 @@ public class SquareBoundingBox extends BoundingBox{
 	};
 	
 	public SquareBoundingBox(Loader loader, Vector2f dimension, Vector3f position, boolean active, boolean visible){
-		this.active = active;
-		this.visible = visible;
+		this.active 	= active;
+		this.visible	= visible;
+		this.dimension 	= dimension;
+		this.position 	= position;
 		calculateBoundingBox();
 		model = loader.loadToVAO(vertices, indices);
+		Log.i("point", "SquareBoundingBox: modelLoaded");
 	}
 	
 	public void update(Vector2f delta){

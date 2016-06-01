@@ -2,6 +2,7 @@ package com.example.claudio.platform.renderEngine;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.example.claudio.platform.entities.Camera;
 import com.example.claudio.platform.entities.Entity;
@@ -23,14 +24,17 @@ public class MasterRenderer {
 
     private EntityRenderer entityRenderer;
 
-    private float[] projectionMatrix;
+    private float[] projectionMatrix = new float[16];
 
     private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
 
     public MasterRenderer(int width, int height){
         enableCulling();
+        Log.i("point", "MasterRenderer: cullingEnabled");
         enableBlending();
+        Log.i("point", "MasterRenderer: blendingEnabled");
         createProjectionMatrix(width, height);
+        Log.i("point", "MasterRenderer: projectionMatrixCreated");
         entityRenderer = new EntityRenderer(projectionMatrix);
     }
 
@@ -72,9 +76,11 @@ public class MasterRenderer {
     }
 
     public void createProjectionMatrix(int width, int height){
-        projectionMatrix = new float[16];
-        float ratio = width/height;
+        Log.i("point", "MasterRenderer: projectionMatrixAllocated");
+        float ratio = ((float) width) / ((float) height);
+        Log.i("point", "MasterRenderer: ratioCalculated: " + ratio + ", width: " + width + ", height: " + height);
         Matrix.orthoM(projectionMatrix, 0, -ratio, ratio, -1, 1, NEAR_PLANE, FAR_PLANE);
+        Log.i("point", "MasterRenderer: ortoMatrixCalculated");
     }
 
     public static void enableBlending(){
