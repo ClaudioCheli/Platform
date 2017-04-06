@@ -1,19 +1,10 @@
 package com.example.claudio.platform.manager;
 
-import android.util.Log;
-
-import com.example.claudio.platform.entities.Camera;
-import com.example.claudio.platform.entities.Entity;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.Manager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Claudio on 30/05/2016.
  */
-public class EntitiesManager {
+/*public class EntitiesManager {
 
     private Manager player;
     private Manager backgrounds;
@@ -63,4 +54,4 @@ public class EntitiesManager {
         return camera;
     }
 
-}
+}*/

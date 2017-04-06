@@ -1,15 +1,11 @@
 package com.example.claudio.platform.entities;
 
-import com.example.claudio.platform.models.RawModel;
-import com.example.claudio.platform.models.TexturedModel;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.ModelTexture;
-import com.example.claudio.platform.toolBox.Vector3f;
+
 
 /**
  * Created by Claudio on 31/05/2016.
  */
-public class Button extends Entity {
+/*public class Button extends Entity {
 
     public Button(Loader loader, Vector3f position, int type, float[] vertices,
                   float[] textureCoords, int[] indices, int textureID){
@@ -24,4 +20,4 @@ public class Button extends Entity {
                 new Vector3f(0,0,0) ,new Vector3f(1,1,1));
     }
 
-}
+}*/

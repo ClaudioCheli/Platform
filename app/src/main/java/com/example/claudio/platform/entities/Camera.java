@@ -1,5 +1,5 @@
 package com.example.claudio.platform.entities;
-
+/*
 import com.example.claudio.platform.animations.PlayerAnimation;
 import com.example.claudio.platform.manager.ButtonsManager;
 import com.example.claudio.platform.manager.DisplayManager;
@@ -10,10 +10,10 @@ import com.example.claudio.platform.renderEngine.Manager;
 import com.example.claudio.platform.toolBox.SquareBoundingBox;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
-
+*/
 /**
  * Created by clasb on 28/05/2016.
- */
+ *//*
 public class Camera {
 
     private Vector3f position    = new Vector3f(0, 0, 0);
@@ -84,4 +84,4 @@ public class Camera {
     public SquareBoundingBox getBoundingBox(){
         return boundingBox;
     }
-}
+}*/

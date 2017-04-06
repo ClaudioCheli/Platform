@@ -13,7 +13,7 @@ import android.opengl.GLES30;
 import com.example.claudio.platform.models.RawModel;
 import com.example.claudio.platform.textures.Texture;
 
-public class Loader {
+/*public class Loader {
 	
 	private static final int INT_SIZE = 4;
 	private static final int FLOAT_SIZE = 4;
@@ -75,7 +75,7 @@ public class Loader {
 		return t;
 	}
 	
-	/*public void cleanUp(){
+	public void cleanUp(){
 		int[] vec = new int[1];
 		for(int i=0; i< vaos.size(); i++){
 			vec[0] = (int)vaos.get(i);
@@ -88,7 +88,7 @@ public class Loader {
 		for(int texture:textures){
 			GL11.glDeleteTextures(texture);
 		}
-	}*/
+	}
 	
 	private void unbindVAO(){
 		GLES30.glBindVertexArray(0);
@@ -113,4 +113,4 @@ public class Loader {
 		return buffer;
 	}
 
-}
+}*/

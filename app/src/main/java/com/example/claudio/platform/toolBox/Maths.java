@@ -2,12 +2,11 @@ package com.example.claudio.platform.toolBox;
 
 import android.opengl.Matrix;
 
-import com.example.claudio.platform.entities.Camera;
 
 /**
  * Created by clasb on 28/05/2016.
  */
-public class Maths {
+/*public class Maths {
 
     public static float[] createTransformationMatrix(Vector3f translation, Vector3f rotation, Vector3f scale){
         float[] matrix = new float[16];
@@ -31,4 +30,4 @@ public class Maths {
         Matrix.translateM(matrix, 0, negativeCameraPos.x, negativeCameraPos.y, negativeCameraPos.z);
         return matrix;
     }
-}
+}*/

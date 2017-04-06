@@ -1,24 +1,12 @@
 package com.example.claudio.platform.manager;
 
-import android.util.Log;
 
-import com.example.claudio.platform.animations.PlayerAnimation;
-import com.example.claudio.platform.entities.Background;
-import com.example.claudio.platform.entities.Camera;
-import com.example.claudio.platform.entities.Entity;
-import com.example.claudio.platform.physicsEngine.Collision;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.Manager;
-import com.example.claudio.platform.toolBox.Util;
-import com.example.claudio.platform.toolBox.Vector3f;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Claudio on 31/05/2016.
  */
-public class BackgroundsManager implements Manager {
+/*public class BackgroundsManager implements Manager {
 
     private List<Background> backgrounds = new ArrayList<Background>();
 
@@ -105,4 +93,4 @@ public class BackgroundsManager implements Manager {
     public void addInEntityList(List<Entity> entities) {
         entities.addAll(backgrounds);
     }
-}
+}*/

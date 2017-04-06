@@ -1,19 +1,10 @@
 package com.example.claudio.platform.manager;
 
-import android.util.Log;
-
-import com.example.claudio.platform.animations.PlayerAnimation;
-import com.example.claudio.platform.entities.Entity;
-import com.example.claudio.platform.entities.Player;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.Manager;
-
-import java.util.List;
 
 /**
  * Created by Claudio on 30/05/2016.
  */
-public class PlayerManager implements Manager{
+/*public class PlayerManager implements Manager{
 
     private Player player;
     private PlayerAnimation animation;
@@ -55,4 +46,4 @@ public class PlayerManager implements Manager{
     public int getState(){return state;}
 
     public int getDirection(){return direction;}
-}
+}*/

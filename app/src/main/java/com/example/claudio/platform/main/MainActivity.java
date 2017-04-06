@@ -2,6 +2,7 @@ package com.example.claudio.platform.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -19,7 +20,7 @@ public class MainActivity extends Activity {
 
         context = this;
 
-        // Imposta la visualizzazione a schermo intero
+        // Set full screen view
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -28,13 +29,14 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        // Crea un DisplayMetrics a cui chiede le dimensioni dello schermo
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        // Imposta mGLSurfaceView come vista principale
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        // Set mGLSurfaceView as main view
         mGLSurfaceView mGLView = new mGLSurfaceView(this, width, height);
         setContentView(mGLView);
     }

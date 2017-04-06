@@ -1,17 +1,11 @@
 package com.example.claudio.platform.toolBox;
 
-import android.view.MotionEvent;
 
-import com.example.claudio.platform.entities.Button;
-import com.example.claudio.platform.manager.ButtonsManager;
-import com.example.claudio.platform.physicsEngine.Collision;
-
-import java.util.List;
 
 /**
  * Created by Claudio on 31/05/2016.
  */
-public class Input {
+/*public class Input {
 
     public static final int LEFT    = 0;
     public static final int RIGHT   = 1;
@@ -86,4 +80,4 @@ public class Input {
         }
     }
 
-}
+}*/

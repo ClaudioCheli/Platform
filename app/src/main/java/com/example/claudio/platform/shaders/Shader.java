@@ -1,6 +1,8 @@
 package com.example.claudio.platform.shaders;
 
 import android.opengl.GLES20;
+import android.opengl.GLES30;
+import android.util.Log;
 
 import com.example.claudio.platform.main.MainActivity;
 import com.example.claudio.platform.toolBox.Util;
@@ -18,7 +20,7 @@ import java.nio.FloatBuffer;
 /**
  * Created by Claudio on 28/05/2016.
  */
-public abstract class ShaderProgram {
+public abstract class Shader {
 
     private int programID;
     private int vertexShaderID;
@@ -26,20 +28,28 @@ public abstract class ShaderProgram {
 
     private static FloatBuffer matrixBuffer = Util.createFloatBuffer(16);
 
-    public ShaderProgram(int vertexFile, int fragmentFile){
+    public Shader(int vertexFile, int fragmentFile){
         vertexShaderID = loadShader(vertexFile, GLES20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile, GLES20.GL_FRAGMENT_SHADER);
-        programID = GLES20.glCreateProgram();
-        GLES20.glAttachShader(programID, vertexShaderID);
-        GLES20.glAttachShader(programID, fragmentShaderID);
+        Util.checkError();
+        programID = GLES30.glCreateProgram();
+        Util.checkError();
+        GLES30.glAttachShader(programID, vertexShaderID);
+        GLES30.glAttachShader(programID, fragmentShaderID);
+        Util.checkError();
         bindAttributes();
-        GLES20.glLinkProgram(programID);
+        GLES30.glLinkProgram(programID);
+        Util.checkError();
 
         // Informazioni sulla compilazione e linking degli shaders e del program
-        GLES20.glValidateProgram(programID);
-        String programInfo = GLES20.glGetProgramInfoLog(programID);
-        String vertexInfo = GLES20.glGetShaderInfoLog(vertexShaderID);
-        String fragmentInfo = GLES20.glGetShaderInfoLog(fragmentShaderID);
+        GLES30.glValidateProgram(programID);
+        String programInfo = GLES30.glGetProgramInfoLog(programID);
+        String vertexInfo = GLES30.glGetShaderInfoLog(vertexShaderID);
+        String fragmentInfo = GLES30.glGetShaderInfoLog(fragmentShaderID);
+        Util.checkError();
+        Log.i("shader", "vertexShader: " + vertexInfo);
+        Log.i("shader", "fragmentShader: " + fragmentInfo);
+        Log.i("shader", "program: " + programInfo);
 
         getAllUniformLocations();
     }
@@ -61,10 +71,15 @@ public abstract class ShaderProgram {
         GLES20.glDeleteProgram(programID);
     }
 
+    public int getProgramID(){
+        return programID;
+    }
+
     protected abstract void getAllUniformLocations();
 
     protected int getUniformLocation(String uniformName){
-        return GLES20.glGetUniformLocation(programID, uniformName);
+        //Log.i("error", "program " + programID + " uniform " + uniformName);
+        return GLES30.glGetUniformLocation(programID, uniformName);
     }
 
     protected abstract void bindAttributes();
@@ -73,19 +88,20 @@ public abstract class ShaderProgram {
         GLES20.glBindAttribLocation(programID, attribute, variableName);
     }
 
-    protected void bindAttributes(int attribute, String variableName){
-        GLES20.glBindAttribLocation(programID, attribute, variableName);
+    protected void loadInt(int location, int value){
+        GLES20.glUniform1i(location, value);
     }
+
 
     protected void loadFloat(int location, float value){
         GLES20.glUniform1f(location, value);
     }
 
-    protected void loadVector(int location, Vector3f vector){
+    protected void loadVector3f(int location, Vector3f vector){
         GLES20.glUniform3f(location, vector.x, vector.y, vector.z);
     }
 
-    protected void load2DVector(int location, Vector2f vector){
+    protected void loadVector2f(int location, Vector2f vector){
         GLES20.glUniform2f(location, vector.x, vector.y);
     }
 
@@ -107,19 +123,23 @@ public abstract class ShaderProgram {
     }
 
     private static int loadShader(int fileId, int type){
-        InputStream inputStream = MainActivity.context.getResources().openRawResource(fileId);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String str;
-        String shader = "";
-        if(inputStream != null){
-            try {
-                while( (str = reader.readLine()) != null )
-                    shader = shader + str;
-            } catch (IOException ioe) {}
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = null;
+        try{
+            InputStream inputStream = MainActivity.context.getResources().openRawResource(fileId);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            while((line = reader.readLine()) != null ){
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        int shaderID = GLES20.glCreateShader(type);
-        GLES20.glShaderSource(shaderID, shader);
-        GLES20.glCompileShader(shaderID);
+        String shader = stringBuilder.toString();
+        //Log.i("point", shader);
+        int shaderID = GLES30.glCreateShader(type);
+        GLES30.glShaderSource(shaderID, shader);
+        GLES30.glCompileShader(shaderID);
         return shaderID;
     }
 }

@@ -4,6 +4,12 @@ public class Vector3f {
 
 	public float x,y,z;
 
+	public Vector3f(){
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+	}
+
 	public Vector3f(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
@@ -14,6 +20,12 @@ public class Vector3f {
 		this.x = vec.x;
 		this.y = vec.y;
 		this.z = z;
+	}
+
+	public Vector3f(Vector3f vec){
+		this.x = vec.x;
+		this.y = vec.y;
+		this.z = vec.z;
 	}
 	
 	public static float distance(Vector3f vec1, Vector3f vec2){

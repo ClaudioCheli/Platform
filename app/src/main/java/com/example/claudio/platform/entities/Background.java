@@ -1,21 +1,9 @@
 package com.example.claudio.platform.entities;
 
-import android.util.Log;
-
-import com.example.claudio.platform.R;
-import com.example.claudio.platform.models.RawModel;
-import com.example.claudio.platform.models.TexturedModel;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.ModelTexture;
-import com.example.claudio.platform.toolBox.SquareBoundingBox;
-import com.example.claudio.platform.toolBox.Util;
-import com.example.claudio.platform.toolBox.Vector2f;
-import com.example.claudio.platform.toolBox.Vector3f;
-
 /**
  * Created by Claudio on 31/05/2016.
  */
-public class Background extends Entity {
+/*public class Background extends Entity {
 
     private static final int BACKGROUND_TEXTURE_ID = R.raw.background;
 
@@ -98,4 +86,4 @@ public class Background extends Entity {
         return rightMargin;
     }
 
-}
+}*/

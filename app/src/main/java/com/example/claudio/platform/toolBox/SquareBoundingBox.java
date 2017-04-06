@@ -2,9 +2,8 @@ package com.example.claudio.platform.toolBox;
 
 import android.util.Log;
 
-import com.example.claudio.platform.renderEngine.Loader;
 
-public class SquareBoundingBox extends BoundingBox{
+/*public class SquareBoundingBox extends BoundingBox{
 	
 	private Vector2f topLeft;
 	private Vector2f bottomRight;
@@ -56,4 +55,4 @@ public class SquareBoundingBox extends BoundingBox{
 	public Vector2f getBottomRight(){
 		return bottomRight;
 	}
-}
+}*/

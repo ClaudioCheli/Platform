@@ -1,21 +1,10 @@
 package com.example.claudio.platform.manager;
 
-import com.example.claudio.platform.R;
-import com.example.claudio.platform.animations.PlayerAnimation;
-import com.example.claudio.platform.entities.Button;
-import com.example.claudio.platform.entities.Entity;
-import com.example.claudio.platform.renderEngine.Loader;
-import com.example.claudio.platform.renderEngine.Manager;
-import com.example.claudio.platform.toolBox.Input;
-import com.example.claudio.platform.toolBox.Vector3f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Claudio on 31/05/2016.
  */
-public class ButtonsManager implements Manager{
+/*public class ButtonsManager implements Manager{
 
     private static List<Button> buttons = new ArrayList<>();
 
@@ -86,4 +75,4 @@ public class ButtonsManager implements Manager{
         state = true;
         this.direction = direction;
     }
-}
+}*/

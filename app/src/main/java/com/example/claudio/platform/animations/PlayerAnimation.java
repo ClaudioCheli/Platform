@@ -1,9 +1,7 @@
 package com.example.claudio.platform.animations;
 
 
-import com.example.claudio.platform.manager.DisplayManager;
-import com.example.claudio.platform.toolBox.Input;
-
+/*
 public class PlayerAnimation {
 
 	public static final int WAIT = 0;
@@ -183,4 +181,4 @@ public class PlayerAnimation {
 		return index;
 	}
 	
-}
+}*/

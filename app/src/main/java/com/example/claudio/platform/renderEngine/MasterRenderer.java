@@ -1,6 +1,6 @@
 package com.example.claudio.platform.renderEngine;
 
-import android.opengl.GLES20;
+/*import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+*/
 /**
  * Created by Claudio on 28/05/2016.
  */
-public class MasterRenderer {
+/*public class MasterRenderer {
 
     private static final float NEAR_PLANE = 0.1f;
     private static final float FAR_PLANE = 10f;
@@ -101,4 +101,4 @@ public class MasterRenderer {
         GLES20.glDisable(GLES20.GL_CULL_FACE);
     }
 
-}
+}*/

@@ -1,22 +1,21 @@
 package com.example.claudio.platform.renderEngine;
 
-import android.opengl.GLES20;
+/*import android.opengl.GLES20;
 import android.opengl.GLES30;
 
 import com.example.claudio.platform.entities.Camera;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.models.RawModel;
 import com.example.claudio.platform.models.TexturedModel;
-import com.example.claudio.platform.shaders.EntityShader;
 import com.example.claudio.platform.toolBox.Maths;
 
 import java.util.List;
 import java.util.Map;
-
+*/
 /**
  * Created by Claudio on 28/05/2016.
  */
-public class EntityRenderer {
+/*public class EntityRenderer {
 
     private EntityShader shader;
 
@@ -75,4 +74,4 @@ public class EntityRenderer {
         shader.cleanUp();
     }
 
-}
+}*/
