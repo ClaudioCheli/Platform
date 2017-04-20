@@ -3,11 +3,14 @@ package com.example.claudio.platform.entities;
 
 import android.opengl.GLES20;
 import android.opengl.GLES30;
+import android.util.Log;
 
 import com.example.claudio.platform.shaders.PlayerShader;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
 import com.example.claudio.platform.tile.Tileset;
+import com.example.claudio.platform.toolBox.Vector2f;
+import com.example.claudio.platform.toolBox.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -22,6 +25,8 @@ public class Player extends Entity{
     private PlayerShader shader;
     private Tile tile;
     private List<Tileset> tilesets;
+
+    private static final float SPEED = 256;
 
     public Player(){
         VAO = new int[1];
@@ -100,6 +105,24 @@ public class Player extends Entity{
     public PlayerShader getShader(){return shader;}
 
     public int getVAO(){return VAO[0];}
+
+    public void updatePosition(Vector2f position){
+        //Log.i("point", "delta: " + SPEED*frameTime);
+        increasePosition(new Vector3f(position.x,position.y,0.0f));
+    }
+
+    public Vector2f getPosition(){
+        return new Vector2f(tile.getPosition().x, tile.getPosition().y);
+    }
+
+    public void setPosition(Vector2f position){
+        tile.setPosition(new Vector3f(position.x, position.y, 0.0f));
+    }
+
+    public void increasePosition(Vector3f delta){
+        tile.increasePosition(delta);
+        //Log.i("physic","position increased " + tile.getPosition().x + ", " + tile.getPosition().y);
+    }
 
     private void bindUniform(){
         shader.loadModelMatrix(tile.getModelMatrix());

@@ -25,13 +25,13 @@ public class Camera {
 
     private PlayerManager       player;
     private ButtonsManager      button;
-    private TerrainManager      terrain;
+    private TerrainManager      terrain_tileset;
     private SquareBoundingBox   boundingBox;
 
-    public Camera(Manager player, Manager button, Manager terrain, Loader loader){
+    public Camera(Manager player, Manager button, Manager terrain_tileset, Loader loader){
         this.player     = (PlayerManager)   player;
         this.button     = (ButtonsManager)  button;
-        this.terrain    = (TerrainManager)  terrain;
+        this.terrain_tileset    = (TerrainManager)  terrain_tileset;
         boundingBox     = new SquareBoundingBox(loader, new Vector2f(bottomRight.x-topLeft.x, topLeft.y-bottomRight.y),
                                 position, true, true);
     }
@@ -54,7 +54,7 @@ public class Camera {
         }
 
         button.setState(direction);
-        terrain.setState(direction);
+        terrain_tileset.setState(direction);
     }
 
     public Vector3f getPosition(){

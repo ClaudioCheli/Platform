@@ -31,16 +31,26 @@ public class DisplayManager {
 
     public static void update(){
         long currentFrameTime   = getCurrentTime();
-        delta                   = (currentFrameTime - lastFrameTime)/1000f;
+        delta                   = (currentFrameTime - lastFrameTime);
         lastFrameTime           = currentFrameTime;
     }
 
     public static long getCurrentTime(){
-        return SystemClock.uptimeMillis()*1000;
+        return SystemClock.uptimeMillis();
     }
 
+    /**
+     * return frame time in milliseconds
+     * @return frame time, float
+     */
+    public static float getFrameTime(){return delta;}
+
+    /**
+     * return frame time in seconds
+     * @return frame time in seconds, float
+     */
     public static float getFrameTimeSeconds(){
-        return delta;
+        return delta/1000f;
     }
 
 }

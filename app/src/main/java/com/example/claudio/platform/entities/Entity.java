@@ -4,6 +4,8 @@ import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
 import com.example.claudio.platform.tile.Tileset;
+import com.example.claudio.platform.toolBox.Vector2f;
+import com.example.claudio.platform.toolBox.Vector3f;
 
 import java.util.List;
 
@@ -17,5 +19,10 @@ public abstract class Entity implements Renderable{
     public abstract void setAnimation();
     public abstract void setShader(Shader shader);
     public abstract void bindBuffers();
+
+    public abstract void updatePosition(Vector2f position);
+
+    public abstract Vector2f getPosition();
+    public abstract void setPosition(Vector2f position);
 
 }

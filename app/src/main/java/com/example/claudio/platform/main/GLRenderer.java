@@ -7,9 +7,12 @@ import android.util.Log;
 import com.example.claudio.platform.builder.EntityCreationDirector;
 import com.example.claudio.platform.builder.PlayerBuilder;
 import com.example.claudio.platform.builder.TileMapBuilder;
+import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.physicsEngine.Physics;
 import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.renderEngine.Renderer;
+import com.example.claudio.platform.terrains.TileMap;
 import com.example.claudio.platform.toolBox.Util;
 
 
@@ -27,14 +30,19 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     private Renderer renderer;
 
+    private Physics physics;
+
     private int width;
     private int height;
 
     private List<Renderable> renderables = new ArrayList<>();
+    private List<Entity> physical = new ArrayList<>();
+    private TileMap tileMap;
 
     public GLRenderer(int width, int height){
         this.width  = width;
         this.height = height;
+        physics = new Physics();
     }
 
     @Override
@@ -52,12 +60,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         tileMapBuilder.bindBuffers();
         Log.i("point", "bufferBinded");
         renderables.add(tileMapBuilder.getEntity());
+        tileMap = (TileMap) tileMapBuilder.getEntity();
         Util.checkError();
 
         EntityCreationDirector director = new EntityCreationDirector();
         director.setEntityBuilder(new PlayerBuilder());
         director.createEntity();
         renderables.add(director.getEntity());
+        physical.add(director.getEntity());
         Util.checkError();
 
         GLES20.glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
@@ -82,6 +92,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-       renderer.render(renderables);
+        DisplayManager.update();
+        physics.update(physical, tileMap);
+        renderer.render(renderables);
     }
 }
