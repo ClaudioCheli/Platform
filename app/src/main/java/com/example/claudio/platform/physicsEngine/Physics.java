@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Physics {
 
-    private static final float GRAVITY = 256;
+    private static final float GRAVITY = 100;
 
     public void update(List<Entity> entities, TileMap tileMap){
         for(Entity entity : entities)
@@ -28,44 +28,61 @@ public class Physics {
     private void applyGravity(Entity entity, TileMap tileMap){
         Vector2f entityPosition = entity.getPosition();
         //Log.i("physic","player position " + entityPosition.x + ", " + entityPosition.y);
-        int tile, tileDx, tileDiag, tileUnd;
+        int tile, tileDx, tileDiag, tileUnd, tileUndUnd;
         //Log.i("physic","tileMap dimension " + TileMap.dimension.x + ", " + TileMap.dimension.y);
-        tile = (int) (TileMap.dimension.x * (int)(entityPosition.y/64) + entityPosition.x/64)+1;
+        tile = (int) (TileMap.dimension.x * (int)((entityPosition.y)/64) + entityPosition.x/64);
         tileDx = tile+1;
         tileUnd = (int) (tile+TileMap.dimension.x);
-        tileDiag = tileUnd+1;
+        tileUndUnd = (int) (tileUnd+TileMap.dimension.x);
         //Log.i("physic", "tileNumber " + tile);
         //Log.i("physic", "tileNumberDx " + tileDx);
         //Log.i("physic", "tileNumberDiag " + tileDiag);
         //Log.i("physic", "tileNumberUnd " + tileUnd);
         TileLevel level = tileMap.getTileLevel(0);
         Tileset tileset = tileMap.getTileset(0);
-        //Log.i("physic", "checkBoundingBox");
+
         int tileID = level.getTileId(tileUnd);
-        Log.i("physic","tileID: " + tileID);
-        BoundingBox box = tileset.getBoundingBox(tile);
+        //Log.i("physic", "tileID " + tileID);
+        BoundingBox box = tileset.getBoundingBox(tileID);
+        Vector2f tilePosition = level.getTilePositions(tileUnd);
 
+        tileID = level.getTileId(tileUndUnd);
+        //Log.i("physic", "tileID " + tileID);
         BoundingBox boxUnd = tileset.getBoundingBox(tileID);
-        Vector2f tilePosition = tileMap.getTileLevel(0).getTilePositions(tileUnd-1);
+        Vector2f tilePositionUnd = level.getTilePositions(tileUndUnd);
 
-        if(boxUnd != null){
-            boxUnd.setPosition(tilePosition);
-            Log.i("physic", "boundingBox != null");
-            Log.i("physic", "player: " + entityPosition.x + ", " + (entityPosition.y+64));
-            Log.i("physic","boxUnd position " + boxUnd.getPosition().x + ", " + boxUnd.getPosition().y);
-            if(!Collision.checkBottomCollision(new Vector2f(entityPosition.x,entityPosition.y+64), boxUnd)){
-                Log.i("physic", "no collision");
+        if(box == null){
+            if(boxUnd == null){
+                //entity.updatePosition(new Vector2f(0.0f,GRAVITY));
                 entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
             }else{
-                Log.i("physic","player setPosition: " + entityPosition.x + ", " + boxUnd.getPosition().y);
-                entity.setPosition(new Vector2f(entityPosition.x, boxUnd.getPosition().y));
-                Log.i("physic", "collision " + entityPosition.x + ", " + entityPosition.y);
+                boxUnd.setPosition(tilePositionUnd);
+                if(!Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUnd)){
+                    //entity.updatePosition(new Vector2f(0.0f,GRAVITY));
+                    entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+                }else{
+                    return;
+                }
             }
         }else{
-            Log.i("physic", "boxUnd null");
-            entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+            box.setPosition(tilePosition);
+            if(!Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), box)){
+                if(boxUnd == null){
+                    //entity.updatePosition(new Vector2f(0.0f,GRAVITY));
+                    entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+                }else{
+                    boxUnd.setPosition(tilePositionUnd);
+                    if(!Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUnd)){
+                        //entity.updatePosition(new Vector2f(0.0f,GRAVITY));
+                        entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+                    }else{
+                        return;
+                    }
+                }
+            }else{
+                return;
+            }
         }
-
     }
 
 }

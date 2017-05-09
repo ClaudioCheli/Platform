@@ -25,7 +25,7 @@ public class Collision {
         Vector2f boxPosition = box.getPosition();
         Vector2f boxDimension = box.getDimension();
         if( point.x <= (boxPosition.x+boxDimension.x) && point.x >= boxPosition.x){
-            Log.i("physic","point: " + point.x + ", " + point.y + " box: " + boxPosition.x + ", " + boxPosition.y);
+            //Log.i("physic","point: " + point.x + ", " + point.y + " box: " + boxPosition.x + ", " + boxPosition.y);
             if(point.y >= boxPosition.y)
                 return true;
             return false;

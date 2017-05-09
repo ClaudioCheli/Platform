@@ -47,18 +47,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        Log.i("point", "onSurfaceCreated");
         TileMapBuilder tileMapBuilder = new TileMapBuilder();
         tileMapBuilder.createEntity();
-        Log.i("point", "entityCreated");
         tileMapBuilder.createTileset();
-        Log.i("point", "tilesetCreated");
         tileMapBuilder.createTileLevels();
-        Log.i("point", "tileLevelsCreated");
         tileMapBuilder.createShader();
-        Log.i("point", "shaderCreated");
         tileMapBuilder.bindBuffers();
-        Log.i("point", "bufferBinded");
         renderables.add(tileMapBuilder.getEntity());
         tileMap = (TileMap) tileMapBuilder.getEntity();
         Util.checkError();

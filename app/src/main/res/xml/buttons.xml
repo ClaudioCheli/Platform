@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object name="buttons">
+    <tileset name="buttons_img" definitionPath="res/tilesets/buttons_def.xml"
+        imagePath="res/tilesets/buttons_img.png"></tileset>
+</object>

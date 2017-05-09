@@ -22,5 +22,10 @@ public class Vector2f {
 	public static float distance(Vector2f vec1, Vector2f vec2){
 		return (float) Math.sqrt(vec1.x*vec2.x + vec1.y*vec2.y);
 	}
+
+	public void clear(){
+		x = 0;
+		y = 0;
+	}
 	
 }

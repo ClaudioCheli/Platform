@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tileset name="buttons" width="256" height="256" tilesNumber="4" tileWidth="128" tileHeight="128">
+    <SubTexture id="0" name="button_left.png" x="0" y="0" width="128" height="128"/>
+    <SubTexture id="1" name="button_right.png" x="128" y="0" width="128" height="128"/>
+    <SubTexture id="2" name="button_up.png" x="0" y="128" width="128" height="128"/>
+</tileset>

@@ -32,4 +32,10 @@ public class Vector3f {
 		return (float) Math.sqrt(vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z);
 	}
 
+	public void clear(){
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+
 }

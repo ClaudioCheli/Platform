@@ -49,8 +49,13 @@ public class Player extends Entity{
 
     @Override
     public void update() {
-
+        //tile.updateModelMatrix();
     }
+
+    /*@Override
+    public void clear(){
+        tile.resetModelMatrix();
+    }*/
 
     @Override
     public void bindProjectionMatrix(float[] projectionMatrix) {
