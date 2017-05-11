@@ -1,5 +1,6 @@
 package com.example.claudio.platform.entities;
 
+import com.example.claudio.platform.animations.Animation;
 import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
@@ -16,9 +17,11 @@ public abstract class Entity implements Renderable{
 
     public abstract void setTile(Tile tile);
     public abstract void setTileset(List<Tileset> tileset);
-    public abstract void setAnimation();
+    public abstract void setAnimation(Animation animation);
     public abstract void setShader(Shader shader);
     public abstract void bindBuffers();
+
+    public abstract void setType(int type);
 
     public abstract void updatePosition(Vector2f position);
 

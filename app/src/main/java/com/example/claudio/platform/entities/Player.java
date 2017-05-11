@@ -5,16 +5,21 @@ import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.util.Log;
 
+import com.example.claudio.platform.animations.Animation;
+import com.example.claudio.platform.manager.DisplayManager;
 import com.example.claudio.platform.shaders.PlayerShader;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
 import com.example.claudio.platform.tile.Tileset;
+import com.example.claudio.platform.toolBox.Input;
+import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Claudio on 30/05/2016.
@@ -26,7 +31,7 @@ public class Player extends Entity{
     private Tile tile;
     private List<Tileset> tilesets;
 
-    private static final float SPEED = 256;
+    private static final float SPEED = 200;
 
     public Player(){
         VAO = new int[1];
@@ -49,7 +54,12 @@ public class Player extends Entity{
 
     @Override
     public void update() {
-        //tile.updateModelMatrix();
+        if(Input.isKeyDown(Util.BUTTON_LEFT))
+            updatePosition(new Vector2f(-SPEED* DisplayManager.getFrameTimeSeconds(),0));
+        if(Input.isKeyDown(Util.BUTTON_RIGHT))
+            updatePosition(new Vector2f(SPEED* DisplayManager.getFrameTimeSeconds(),0));
+        if(Input.isKeyDown(Util.BUTTON_UP))
+            updatePosition(new Vector2f(0,-SPEED* DisplayManager.getFrameTimeSeconds()*2));
     }
 
     /*@Override
@@ -98,9 +108,12 @@ public class Player extends Entity{
     }
 
     @Override
-    public void setAnimation() {
+    public void setAnimation(Animation animation) {
 
     }
+
+    @Override
+    public void setType(int type){}
 
     @Override
     public void setShader(Shader shader) {

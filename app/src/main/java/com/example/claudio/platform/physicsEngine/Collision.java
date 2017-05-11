@@ -12,6 +12,27 @@ import com.example.claudio.platform.toolBox.Vector2f;
  */
 public class Collision {
 
+    public static boolean checkCollision(Vector2f point, BoundingBox box){
+        if(box instanceof SquareBoundingBox){
+            return checkCollision(point, (SquareBoundingBox) box);
+        }
+        return false;
+    }
+
+    private static boolean checkCollision(Vector2f point, SquareBoundingBox box){
+        Vector2f boxPosition    = box.getPosition();
+        Vector2f boxDimension   = box.getDimension();
+        if(point.x >= boxPosition.x && point.x <= (boxPosition.x+boxDimension.x)){
+            if(point.y >= boxPosition.y && point.y <= (boxPosition.y+boxDimension.y)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public static boolean checkBottomCollision(Vector2f point, BoundingBox box){
         if(box instanceof SquareBoundingBox){
             return checkBottomCollision(point, (SquareBoundingBox) box);
@@ -21,7 +42,7 @@ public class Collision {
         return false;
     }
 
-    public static boolean checkBottomCollision(Vector2f point, SquareBoundingBox box){
+    private static boolean checkBottomCollision(Vector2f point, SquareBoundingBox box){
         Vector2f boxPosition = box.getPosition();
         Vector2f boxDimension = box.getDimension();
         if( point.x <= (boxPosition.x+boxDimension.x) && point.x >= boxPosition.x){
@@ -33,7 +54,7 @@ public class Collision {
         return false;
     }
 
-    public static boolean checkBottomCollision(Vector2f point, LineBoundingBox box){
+    private static boolean checkBottomCollision(Vector2f point, LineBoundingBox box){
         return false;
     }
 

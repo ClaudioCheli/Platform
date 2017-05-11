@@ -4,9 +4,11 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
+import com.example.claudio.platform.builder.ButtonBuilder;
 import com.example.claudio.platform.builder.EntityCreationDirector;
 import com.example.claudio.platform.builder.PlayerBuilder;
 import com.example.claudio.platform.builder.TileMapBuilder;
+import com.example.claudio.platform.entities.Button;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.manager.DisplayManager;
 import com.example.claudio.platform.physicsEngine.Physics;
@@ -35,8 +37,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     private int width;
     private int height;
 
-    private List<Renderable> renderables = new ArrayList<>();
-    private List<Entity> physical = new ArrayList<>();
+    private List<Renderable> renderables    = new ArrayList<>();
+    private List<Entity> physical           = new ArrayList<>();
+    private List<Button> buttons            = new ArrayList<>();
     private TileMap tileMap;
 
     public GLRenderer(int width, int height){
@@ -45,8 +48,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         physics = new Physics();
     }
 
+    public List<Button> getButtons(){return buttons;}
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        Log.i("point", "Creating tileMap");
         TileMapBuilder tileMapBuilder = new TileMapBuilder();
         tileMapBuilder.createEntity();
         tileMapBuilder.createTileset();
@@ -56,13 +62,34 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         renderables.add(tileMapBuilder.getEntity());
         tileMap = (TileMap) tileMapBuilder.getEntity();
         Util.checkError();
+        Log.i("point", "tileMap created");
 
+        Log.i("point", "Creating player");
         EntityCreationDirector director = new EntityCreationDirector();
         director.setEntityBuilder(new PlayerBuilder());
         director.createEntity();
         renderables.add(director.getEntity());
         physical.add(director.getEntity());
         Util.checkError();
+        Log.i("point", "player Created");
+
+        Log.i("point", "Creating buttons");
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_LEFT));
+        director.createEntity();
+        renderables.add(director.getEntity());
+        buttons.add((Button) director.getEntity());
+        Log.i("point", "button 1 created");
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_RIGHT));
+        director.createEntity();
+        renderables.add(director.getEntity());
+        buttons.add((Button) director.getEntity());
+        Log.i("point", "button 2 created");
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_UP));
+        director.createEntity();
+        renderables.add(director.getEntity());
+        buttons.add((Button) director.getEntity());
+        Log.i("point", "button 3 created");
+        Log.i("point", "buttons created");
 
         GLES20.glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
@@ -87,6 +114,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         DisplayManager.update();
+
         physics.update(physical, tileMap);
         renderer.render(renderables);
     }

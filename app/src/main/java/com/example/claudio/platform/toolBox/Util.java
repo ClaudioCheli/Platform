@@ -11,8 +11,9 @@ import java.nio.FloatBuffer;
  */
 public class Util {
 
-    public static final int LEFT  = 0;
-    public static final int RIGHT = 1;
+    public static final int BUTTON_LEFT     = 0;
+    public static final int BUTTON_RIGHT    = 1;
+    public static final int BUTTON_UP       = 2;
 
     public static FloatBuffer createFloatBuffer(int dimension){
         FloatBuffer buffer = FloatBuffer.allocate(dimension);

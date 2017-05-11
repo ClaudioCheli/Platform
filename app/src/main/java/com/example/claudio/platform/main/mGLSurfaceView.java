@@ -5,6 +5,14 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.claudio.platform.entities.Button;
+import com.example.claudio.platform.entities.Entity;
+import com.example.claudio.platform.physicsEngine.Collision;
+import com.example.claudio.platform.toolBox.Input;
+import com.example.claudio.platform.toolBox.Vector2f;
+
+import java.util.List;
+
 /**
  * Created by Claudio on 28/05/2016.
  */
@@ -23,16 +31,8 @@ public class mGLSurfaceView extends GLSurfaceView{
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent e){
-        float x = e.getX();
-        float y = e.getY();
-
-        switch(e.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-        }
+    public boolean onTouchEvent(MotionEvent event){
+        Input.checkInput(event, mRenderer.getButtons());
 
         return true;
     }
