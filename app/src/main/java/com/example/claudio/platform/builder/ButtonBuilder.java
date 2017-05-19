@@ -176,9 +176,11 @@ public class ButtonBuilder extends EntityBuilder {
             }
         }
 
-        Animation animation = new UiAnimation();
-        animation.setId(tileId+1);
-        entity.setAnimation(animation);
+        int ids[] = new int[1];
+        ids[0] = tileId+1;
+        List<Animation> animations = new ArrayList<>();
+        animations.add(new UiAnimation(1, ids));
+        entity.setAnimation(animations);
         Log.i("point", "ButtonBuilder: animation created");
     }
 

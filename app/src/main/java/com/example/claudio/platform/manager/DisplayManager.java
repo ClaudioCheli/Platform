@@ -35,6 +35,10 @@ public class DisplayManager {
         lastFrameTime           = currentFrameTime;
     }
 
+    /**
+     * get current time in milliseconds
+     * @return time in milliseconds, long
+     */
     public static long getCurrentTime(){
         return SystemClock.uptimeMillis();
     }

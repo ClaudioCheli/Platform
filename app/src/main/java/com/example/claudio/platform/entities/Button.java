@@ -66,7 +66,7 @@ public class Button extends Entity {
         shader.loadModelMatrix(tile.getModelMatrix());
         shader.loadTilesetNumberOfRows(tilesets.get(0).getNumberOfRows());
         shader.loadTilesetNumberOfColumns(tilesets.get(0).getNumberOfColumns());
-        shader.loadTextureIndex(animation.getId());
+        shader.loadTextureIndex(animation.getCurrentID());
     }
 
     private void bindAttribute(){
@@ -91,6 +91,15 @@ public class Button extends Entity {
     }
 
     @Override
+    public void bindViewMatrix(float[] viewMatrix){
+    }
+
+    @Override
+    public void handleInput() {
+
+    }
+
+    @Override
     public void setTile(Tile tile) {
         this.tile = tile;
 
@@ -111,8 +120,8 @@ public class Button extends Entity {
     }
 
     @Override
-    public void setAnimation(Animation animation) {
-        this.animation = (UiAnimation) animation;
+    public void setAnimation(List<Animation> animations) {
+        animation = (UiAnimation) animations.get(0);
     }
 
     @Override

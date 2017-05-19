@@ -3,23 +3,19 @@ package com.example.claudio.platform.entities;
 
 import android.opengl.GLES20;
 import android.opengl.GLES30;
-import android.util.Log;
 
 import com.example.claudio.platform.animations.Animation;
-import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.finiteStateMachines.PlayerState;
 import com.example.claudio.platform.shaders.PlayerShader;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
 import com.example.claudio.platform.tile.Tileset;
-import com.example.claudio.platform.toolBox.Input;
-import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Claudio on 30/05/2016.
@@ -30,8 +26,10 @@ public class Player extends Entity{
     private PlayerShader shader;
     private Tile tile;
     private List<Tileset> tilesets;
+    private PlayerState state;
 
-    private static final float SPEED = 200;
+    public static final float SPEED = 300;
+    public static final float JUMP_SPEED = 700;
 
     public Player(){
         VAO = new int[1];
@@ -53,24 +51,30 @@ public class Player extends Entity{
     }
 
     @Override
-    public void update() {
-        if(Input.isKeyDown(Util.BUTTON_LEFT))
-            updatePosition(new Vector2f(-SPEED* DisplayManager.getFrameTimeSeconds(),0));
-        if(Input.isKeyDown(Util.BUTTON_RIGHT))
-            updatePosition(new Vector2f(SPEED* DisplayManager.getFrameTimeSeconds(),0));
-        if(Input.isKeyDown(Util.BUTTON_UP))
-            updatePosition(new Vector2f(0,-SPEED* DisplayManager.getFrameTimeSeconds()*2));
+    public void handleInput(){
+        PlayerState newState = state.handleInput();
+        if(newState != null){
+            state = newState;
+            state.enter();
+        }
     }
 
-    /*@Override
-    public void clear(){
-        tile.resetModelMatrix();
-    }*/
+    @Override
+    public void update() {
+        state.update(this);
+    }
 
     @Override
     public void bindProjectionMatrix(float[] projectionMatrix) {
         shader.start();
         shader.loadProjectionMatrix(projectionMatrix);
+        shader.stop();
+    }
+
+    @Override
+    public void bindViewMatrix(float[] viewMatrix){
+        shader.start();
+        shader.loadViewMatrix(viewMatrix);
         shader.stop();
     }
 
@@ -108,8 +112,10 @@ public class Player extends Entity{
     }
 
     @Override
-    public void setAnimation(Animation animation) {
-
+    public void setAnimation(List<Animation> animations) {
+        PlayerState.setAnimations(animations);
+        state = PlayerState.idleRightState;
+        state.enter();
     }
 
     @Override
@@ -125,7 +131,6 @@ public class Player extends Entity{
     public int getVAO(){return VAO[0];}
 
     public void updatePosition(Vector2f position){
-        //Log.i("point", "delta: " + SPEED*frameTime);
         increasePosition(new Vector3f(position.x,position.y,0.0f));
     }
 
@@ -139,14 +144,13 @@ public class Player extends Entity{
 
     public void increasePosition(Vector3f delta){
         tile.increasePosition(delta);
-        //Log.i("physic","position increased " + tile.getPosition().x + ", " + tile.getPosition().y);
-    }
+        }
 
     private void bindUniform(){
         shader.loadModelMatrix(tile.getModelMatrix());
         shader.loadTilesetNumberOfRows(tilesets.get(0).getNumberOfRows());
         shader.loadTilesetNumberOfColumns(tilesets.get(0).getNumberOfColumns());
-        shader.loadTextureIndex(8);//TODO create animation
+        shader.loadTextureIndex(state.getAnimationID()+1);
     }
 
     private void bindTexture(){

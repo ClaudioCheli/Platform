@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Physics {
 
-    private static final float GRAVITY = 200;
+    private static final float GRAVITY = 600;
 
     public void update(List<Entity> entities, TileMap tileMap){
         for(Entity entity : entities)
@@ -27,8 +27,10 @@ public class Physics {
 
     private void applyGravity(Entity entity, TileMap tileMap){
         Vector2f entityPosition = entity.getPosition();
-        boolean bBox[] = new boolean[4];
-        int tile, tileDx, tileDiag, tileUnd, tileUndDx, tileUndUnd, tileUndUndDx;
+        boolean bBox[] = new boolean[6];
+        for(int i=0; i<bBox.length; i++)
+            bBox[i] = false;
+        int tile, tileUnd, tileUndUnd, tileDx, tileUndDx, tileUndUndDx;
         tile = (int) (TileMap.dimension.x * (int)((entityPosition.y)/64) + entityPosition.x/64);
         tileDx = tile+1;
         tileUnd = (int) (tile+TileMap.dimension.x);
@@ -39,13 +41,21 @@ public class Physics {
         TileLevel level = tileMap.getTileLevel(0);
         Tileset tileset = tileMap.getTileset(0);
 
-        int tileID = level.getTileId(tileUnd);
+        int tileID = level.getTileId(tile);
         BoundingBox box = tileset.getBoundingBox(tileID);
-        Vector2f tilePosition = level.getTilePositions(tileUnd);
+        Vector2f tilePosition = level.getTilePositions(tile);
+
+        tileID = level.getTileId(tileUnd);
+        BoundingBox boxUnd = tileset.getBoundingBox(tileID);
+        Vector2f tilePositionUnd = level.getTilePositions(tileUnd);
 
         tileID = level.getTileId(tileUndUnd);
-        BoundingBox boxUnd = tileset.getBoundingBox(tileID);
-        Vector2f tilePositionUnd = level.getTilePositions(tileUndUnd);
+        BoundingBox boxUndUnd = tileset.getBoundingBox(tileID);
+        Vector2f tilePositionUndUnd = level.getTilePositions(tileUndUnd);
+
+        tileID = level.getTileId(tileDx);
+        BoundingBox boxDx = tileset.getBoundingBox(tileID);
+        Vector2f tilePositionDx = level.getTilePositions(tileDx);
 
         tileID = level.getTileId(tileUndDx);
         BoundingBox boxUndDx = tileset.getBoundingBox(tileID);
@@ -61,15 +71,23 @@ public class Physics {
         }
         if(boxUnd != null){
             boxUnd.setPosition(tilePositionUnd);
-            bBox[1] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128),boxUnd);
+            bBox[1] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUnd);
+        }
+        if(boxUndUnd != null){
+            boxUndUnd.setPosition(tilePositionUndUnd);
+            bBox[2] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128),boxUndUnd);
+        }
+        if(boxDx != null){
+            boxDx.setPosition(tilePositionDx);
+            bBox[3] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxDx);
         }
         if(boxUndDx != null){
             boxUndDx.setPosition(tilePositionUndDx);
-            bBox[2] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndDx);
+            bBox[4] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndDx);
         }
         if(boxUndUndDx != null){
             boxUndUndDx.setPosition(tilePositionUndUndDx);
-            bBox[3] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndUndDx);
+            bBox[5] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndUndDx);
         }
 
         boolean found = false;

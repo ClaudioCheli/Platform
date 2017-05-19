@@ -55,6 +55,17 @@ public class Collision {
     }
 
     private static boolean checkBottomCollision(Vector2f point, LineBoundingBox box){
+        Vector2f endpoints[] = box.getEndpoints();
+        Vector2f a = endpoints[0];
+        Vector2f b = endpoints[1];
+        Log.i("physic", "point: " + point.x + ", " + point.y + " box: " + a.x + ", " + b.x);
+        if(point.x >= a.x && point.x <= b.x) {
+            float yLine = (b.y * (point.x - a.x) - a.y * (point.x - b.x)) / (b.x - a.x);
+            Log.i("physic", "point: " + point.x + ", " + point.y + " box: " + yLine);
+            if (yLine <= point.y) {
+                return true;
+            }
+        }
         return false;
     }
 

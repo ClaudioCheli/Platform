@@ -17,6 +17,11 @@ import java.util.Map;
 public class Input {
 
     private static Map<Integer, Boolean> keys = new HashMap<>();
+    static {
+        keys.put(Util.BUTTON_LEFT, false);
+        keys.put(Util.BUTTON_RIGHT, false);
+        keys.put(Util.BUTTON_UP, false);
+    }
     private static Map<Integer, Vector2f> activePointers = new HashMap<>();
     private static Map<Integer, Integer> pointerToButton = new HashMap<>();
 
@@ -56,7 +61,7 @@ public class Input {
         }
     }
 
-    public static void setKeyDown(int keyType){
+    private static void setKeyDown(int keyType){
         switch (keyType) {
             case Util.BUTTON_LEFT:
                 keys.put(Util.BUTTON_LEFT, true);
@@ -71,7 +76,7 @@ public class Input {
 
     }
 
-    public static void setKeyUp(int keyType){
+    private static void setKeyUp(int keyType){
         switch (keyType) {
             case Util.BUTTON_LEFT:
                 keys.put(Util.BUTTON_LEFT, false);
