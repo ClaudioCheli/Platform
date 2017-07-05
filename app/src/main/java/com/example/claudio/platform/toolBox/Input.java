@@ -54,9 +54,11 @@ public class Input {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_CANCEL:
-                activePointers.remove(pointerId);
-                setKeyUp(pointerToButton.get(pointerId));
-                pointerToButton.remove(pointerId);
+                if(activePointers.containsKey(pointerId)) {
+                    activePointers.remove(pointerId);
+                    setKeyUp(pointerToButton.get(pointerId));
+                    pointerToButton.remove(pointerId);
+                }
                 break;
         }
     }

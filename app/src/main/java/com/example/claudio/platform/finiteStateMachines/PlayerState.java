@@ -32,8 +32,8 @@ public abstract class PlayerState {
     protected static JumpingRightAnimation  jumpingRightAnimation;
     protected static JumpingLeftAnimation   jumpingLeftAnimation;
 
-    public abstract void enter();
-    public abstract PlayerState handleInput();
+    public abstract void enter(Player player);
+    public abstract PlayerState handleInput(Player player);
     public abstract void update(Player player);
     public abstract void exit();
     public abstract int getAnimationID();

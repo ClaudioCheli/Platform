@@ -27,6 +27,7 @@ public class Player extends Entity{
     private Tile tile;
     private List<Tileset> tilesets;
     private PlayerState state;
+    private boolean jumping = false;
 
     public static final float SPEED = 300;
     public static final float JUMP_SPEED = 700;
@@ -52,10 +53,10 @@ public class Player extends Entity{
 
     @Override
     public void handleInput(){
-        PlayerState newState = state.handleInput();
+        PlayerState newState = state.handleInput(this);
         if(newState != null){
             state = newState;
-            state.enter();
+            state.enter(this);
         }
     }
 
@@ -115,7 +116,7 @@ public class Player extends Entity{
     public void setAnimation(List<Animation> animations) {
         PlayerState.setAnimations(animations);
         state = PlayerState.idleRightState;
-        state.enter();
+        state.enter(this);
     }
 
     @Override
@@ -145,6 +146,14 @@ public class Player extends Entity{
     public void increasePosition(Vector3f delta){
         tile.increasePosition(delta);
         }
+
+    @Override
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
+    @Override
+    public boolean isJumping(){return jumping;}
 
     private void bindUniform(){
         shader.loadModelMatrix(tile.getModelMatrix());

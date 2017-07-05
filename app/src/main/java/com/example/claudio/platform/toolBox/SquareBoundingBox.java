@@ -10,11 +10,13 @@ public class SquareBoundingBox implements BoundingBox{
         this.dimension  = new Vector2f(dimension.x, dimension.y);
     }
 
+    @Override
     public void setPosition(Vector2f pos){
         position.x = pos.x;
         position.y = pos.y;
     }
 
+    @Override
     public Vector2f getPosition(){
         return new Vector2f(position);
     }

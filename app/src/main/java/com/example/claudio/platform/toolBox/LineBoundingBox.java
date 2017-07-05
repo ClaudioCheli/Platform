@@ -18,6 +18,7 @@ public class LineBoundingBox implements BoundingBox {
         this.relativeEndpoints[1]  = new Vector2f(endpoints[1].x, endpoints[1].y);
     }
 
+    @Override
     public void setPosition(Vector2f pos){
         position.x = pos.x;
         position.y = pos.y;
@@ -27,6 +28,7 @@ public class LineBoundingBox implements BoundingBox {
         endpoints[1].y = relativeEndpoints[1].y + pos.y;
     }
 
+    @Override
     public Vector2f getPosition(){return position;}
     public Vector2f[] getEndpoints(){return endpoints;}
 

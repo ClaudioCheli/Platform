@@ -27,5 +27,11 @@ public class Vector2f {
 		x = 0;
 		y = 0;
 	}
-	
+
+	public Vector2f subtract(Vector2f vec){
+        this.x = this.x - vec.x;
+        this.y = this.y - vec.y;
+		return this;
+	}
+
 }

@@ -15,13 +15,13 @@ import com.example.claudio.platform.toolBox.Vector2f;
 public class RunningLeftState extends PlayerState {
 
     @Override
-    public void enter() {
+    public void enter(Player player) {
         Log.i("states", "enter RunningLeftState");
         runningLeftAnimation.start(DisplayManager.getCurrentTime());
     }
 
     @Override
-    public PlayerState handleInput() {
+    public PlayerState handleInput(Player player) {
         if(Input.isKeyDown(Util.BUTTON_UP)){
             return jumpingLeftState;
         }

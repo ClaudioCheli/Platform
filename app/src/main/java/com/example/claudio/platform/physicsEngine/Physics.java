@@ -25,18 +25,21 @@ public class Physics {
             applyGravity(entity, tileMap);
     }
 
-    private void applyGravity(Entity entity, TileMap tileMap){
+    private void applyGravity(Entity entity, TileMap tileMap) {
         Vector2f entityPosition = entity.getPosition();
+        Vector2f displacement = new Vector2f(0.0f, DisplayManager.getFrameTimeSeconds() * GRAVITY);
+        Vector2f nextPosition = new Vector2f(entityPosition.x + displacement.x, entityPosition.y + displacement.y);
+        Vector2f collisionPosition = nextPosition;
         boolean bBox[] = new boolean[6];
-        for(int i=0; i<bBox.length; i++)
+        for (int i = 0; i < bBox.length; i++)
             bBox[i] = false;
         int tile, tileUnd, tileUndUnd, tileDx, tileUndDx, tileUndUndDx;
-        tile = (int) (TileMap.dimension.x * (int)((entityPosition.y)/64) + entityPosition.x/64);
-        tileDx = tile+1;
-        tileUnd = (int) (tile+TileMap.dimension.x);
-        tileUndDx = tileUnd+1;
-        tileUndUnd = (int) (tileUnd+TileMap.dimension.x);
-        tileUndUndDx = tileUndUnd+1;
+        tile = (int) (TileMap.dimension.x * (int) ((entityPosition.y) / 64) + entityPosition.x / 64);
+        tileDx = tile + 1;
+        tileUnd = (int) (tile + TileMap.dimension.x);
+        tileUndDx = tileUnd + 1;
+        tileUndUnd = (int) (tileUnd + TileMap.dimension.x);
+        tileUndUndDx = tileUndUnd + 1;
 
         TileLevel level = tileMap.getTileLevel(0);
         Tileset tileset = tileMap.getTileset(0);
@@ -65,29 +68,78 @@ public class Physics {
         BoundingBox boxUndUndDx = tileset.getBoundingBox(tileID);
         Vector2f tilePositionUndUndDx = level.getTilePositions(tileUndUndDx);
 
-        if(box != null){
+        if (box != null) {
             box.setPosition(tilePosition);
-            bBox[0] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), box);
+            if (bBox[0] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), box))
+                collisionPosition = new Vector2f(entityPosition.x, box.getPosition().y - 128);
+        }
+        if (boxUnd != null) {
+            boxUnd.setPosition(tilePositionUnd);
+            if (bBox[1] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUnd))
+                collisionPosition = new Vector2f(entityPosition.x, boxUnd.getPosition().y - 128);
+        }
+        if (boxUndUnd != null) {
+            boxUndUnd.setPosition(tilePositionUndUnd);
+            if (bBox[2] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUnd))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndUnd.getPosition().y - 128);
+        }
+        if (boxDx != null) {
+            boxDx.setPosition(tilePositionDx);
+            if (bBox[3] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxDx.getPosition().y - 128);
+        }
+        if (boxUndDx != null) {
+            boxUndDx.setPosition(tilePositionUndDx);
+            if (bBox[4] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndDx.getPosition().y - 128);
+        }
+        if (boxUndUndDx != null) {
+            boxUndUndDx.setPosition(tilePositionUndUndDx);
+            if (bBox[5] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUndDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndUndDx.getPosition().y - 128);
+        }
+
+        if (entityPosition.y < 850)
+            entity.updatePosition(collisionPosition.subtract(entityPosition));
+
+        boolean found = false;
+        int i = 0;
+        while (found == false && i < bBox.length) {
+            found = bBox[i];
+            i++;
+        }
+        if (found)
+            entity.setJumping(false);
+    }
+       /* if(box != null){
+            box.setPosition(tilePosition);
+            if(bBox[0] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), box))
+                collisionPosition = new Vector2f(entityPosition.x, box.getPosition().y);
         }
         if(boxUnd != null){
             boxUnd.setPosition(tilePositionUnd);
-            bBox[1] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUnd);
+            if(bBox[1] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUnd))
+                collisionPosition = new Vector2f(entityPosition.x, boxUnd.getPosition().y);
         }
         if(boxUndUnd != null){
             boxUndUnd.setPosition(tilePositionUndUnd);
-            bBox[2] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128),boxUndUnd);
+            if(bBox[2] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128),boxUndUnd))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndUnd.getPosition().y);
         }
         if(boxDx != null){
             boxDx.setPosition(tilePositionDx);
-            bBox[3] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxDx);
+            if(bBox[3] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxDx.getPosition().y);
         }
         if(boxUndDx != null){
             boxUndDx.setPosition(tilePositionUndDx);
-            bBox[4] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndDx);
+            if(bBox[4] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndDx.getPosition().y);
         }
         if(boxUndUndDx != null){
             boxUndUndDx.setPosition(tilePositionUndUndDx);
-            bBox[5] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndUndDx);
+            if(bBox[5] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), boxUndUndDx))
+                collisionPosition = new Vector2f(entityPosition.x, boxUndUndDx.getPosition().y);
         }
 
         boolean found = false;
@@ -98,8 +150,12 @@ public class Physics {
         }
 
         if(found == false){
-            entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+            if(entityPosition.y < 850)
+                entity.updatePosition(collisionPosition.subtract(entityPosition));
+                //entity.updatePosition(new Vector2f(0.0f,DisplayManager.getFrameTimeSeconds()*GRAVITY));
+        }else {
+            entity.setJumping(false);
         }
-    }
+    }*/
 
 }

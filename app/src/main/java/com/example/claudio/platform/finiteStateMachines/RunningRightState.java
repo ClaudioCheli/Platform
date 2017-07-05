@@ -14,12 +14,12 @@ import com.example.claudio.platform.toolBox.Vector2f;
 public class RunningRightState extends PlayerState {
 
     @Override
-    public void enter() {
+    public void enter(Player player) {
         runningRightAnimation.start(DisplayManager.getCurrentTime());
     }
 
     @Override
-    public PlayerState handleInput() {
+    public PlayerState handleInput(Player player) {
         if(Input.isKeyDown(Util.BUTTON_UP)){
             exit();
             return jumpingRightState;

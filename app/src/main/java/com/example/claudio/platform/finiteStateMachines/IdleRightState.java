@@ -14,13 +14,13 @@ import com.example.claudio.platform.toolBox.Util;
 public class IdleRightState extends PlayerState {
 
     @Override
-    public void enter() {
+    public void enter(Player player) {
         Log.i("states", "enter idleRightState");
         idleRightAnimation.start(DisplayManager.getCurrentTime());
     }
 
     @Override
-    public PlayerState handleInput() {
+    public PlayerState handleInput(Player player) {
         if(Input.isKeyDown(Util.BUTTON_LEFT)){
             Log.i("states", "idleRightState return runningLeftState");
             exit();
