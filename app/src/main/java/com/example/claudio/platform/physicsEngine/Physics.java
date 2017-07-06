@@ -71,35 +71,42 @@ public class Physics {
         if (box != null) {
             box.setPosition(tilePosition);
             if (bBox[0] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), box))
-                collisionPosition = new Vector2f(entityPosition.x, box.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(box.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, box.getPosition().y - 128);
         }
         if (boxUnd != null) {
             boxUnd.setPosition(tilePositionUnd);
             if (bBox[1] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUnd))
-                collisionPosition = new Vector2f(entityPosition.x, boxUnd.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(boxUnd.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, boxUnd.getPosition().y - 128);
         }
         if (boxUndUnd != null) {
             boxUndUnd.setPosition(tilePositionUndUnd);
             if (bBox[2] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUnd))
-                collisionPosition = new Vector2f(entityPosition.x, boxUndUnd.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(boxUndUnd.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, boxUndUnd.getPosition().y - 128);
         }
         if (boxDx != null) {
             boxDx.setPosition(tilePositionDx);
             if (bBox[3] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxDx))
-                collisionPosition = new Vector2f(entityPosition.x, boxDx.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(boxDx.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, boxDx.getPosition().y - 128);
         }
         if (boxUndDx != null) {
             boxUndDx.setPosition(tilePositionUndDx);
             if (bBox[4] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndDx))
-                collisionPosition = new Vector2f(entityPosition.x, boxUndDx.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(boxUndDx.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, boxUndDx.getPosition().y - 128);
         }
         if (boxUndUndDx != null) {
             boxUndUndDx.setPosition(tilePositionUndUndDx);
             if (bBox[5] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUndDx))
-                collisionPosition = new Vector2f(entityPosition.x, boxUndUndDx.getPosition().y - 128);
+                collisionPosition = calculateCollisionPoint(boxUndUndDx.getEndpoints(), entityPosition);
+                //collisionPosition = new Vector2f(entityPosition.x, boxUndUndDx.getPosition().y - 128);
         }
 
         if (entityPosition.y < 850)
+            //entity.setPosition(collisionPosition);
             entity.updatePosition(collisionPosition.subtract(entityPosition));
 
         boolean found = false;
@@ -111,6 +118,17 @@ public class Physics {
         if (found)
             entity.setJumping(false);
     }
+
+    private Vector2f calculateCollisionPoint(Vector2f[] endpoints, Vector2f entityPosition){
+        Vector2f a = endpoints[0];
+        Vector2f b = endpoints[1];
+        float yLine = (b.y * (entityPosition.x - a.x) - a.y * (entityPosition.x - b.x)) / (b.x - a.x);
+        if(a.y == b.y)
+            return new Vector2f(entityPosition.x, yLine-128);
+        return new Vector2f(entityPosition.x, yLine-192);
+    }
+
+
        /* if(box != null){
             box.setPosition(tilePosition);
             if(bBox[0] = Collision.checkBottomCollision(new Vector2f(entityPosition.x+64,entityPosition.y+128), box))
@@ -157,5 +175,7 @@ public class Physics {
             entity.setJumping(false);
         }
     }*/
+
+
 
 }

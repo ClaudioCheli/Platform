@@ -21,6 +21,14 @@ public class SquareBoundingBox implements BoundingBox{
         return new Vector2f(position);
     }
 
+    @Override
+    public Vector2f[] getEndpoints() {
+        Vector2f[] endpoints = new Vector2f[2];
+        endpoints[0] = new Vector2f(position.x, position.y);
+        endpoints[1] = new Vector2f(position.x+dimension.x, position.y);
+        return endpoints;
+    }
+
     public Vector2f getDimension(){
         return new Vector2f(dimension);
     }

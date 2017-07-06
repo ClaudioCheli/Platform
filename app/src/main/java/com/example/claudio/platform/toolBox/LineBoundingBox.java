@@ -30,6 +30,8 @@ public class LineBoundingBox implements BoundingBox {
 
     @Override
     public Vector2f getPosition(){return position;}
+
+    @Override
     public Vector2f[] getEndpoints(){return endpoints;}
 
 
