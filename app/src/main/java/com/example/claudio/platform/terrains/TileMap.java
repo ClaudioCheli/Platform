@@ -2,7 +2,6 @@ package com.example.claudio.platform.terrains;
 
 import android.opengl.GLES20;
 import android.opengl.GLES30;
-import android.util.Log;
 
 import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.shaders.TileMapShader;
@@ -162,18 +161,7 @@ public class TileMap implements Renderable {
         for(TileLevel level : tileLevels){
             positionBuffer.put(level.getPositions());
         }
-       /* float[] position = positionBuffer.array();
-        List<String> stringPositions = new ArrayList<>();
-        int k=0;
-        for(TileLevel level : tileLevels){
-            for(int i=0; i<level.getPositions().capacity()/3; i++){
-                stringPositions.add(position[k++] + ", " + position[k++] + ", " + position[k++]);
-            }
-            k=0;
-        }
-        for(String str : stringPositions)
-            Log.i("point", str);
-            */
+
         positionBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, positionBuffer.capacity()*4,
                 positionBuffer, GLES20.GL_STATIC_DRAW);

@@ -1,7 +1,5 @@
 package com.example.claudio.platform.finiteStateMachines;
 
-import android.util.Log;
-
 import com.example.claudio.platform.entities.Player;
 import com.example.claudio.platform.manager.DisplayManager;
 import com.example.claudio.platform.toolBox.Input;
@@ -16,7 +14,6 @@ public class RunningLeftState extends PlayerState {
 
     @Override
     public void enter(Player player) {
-        Log.i("states", "enter RunningLeftState");
         runningLeftAnimation.start(DisplayManager.getCurrentTime());
     }
 
@@ -26,7 +23,6 @@ public class RunningLeftState extends PlayerState {
             return jumpingLeftState;
         }
         if(Input.isKeyDown(Util.BUTTON_LEFT)){
-            Log.i("states", "RunningLeftState return null");
             return null;
         }
         if(Input.isKeyDown(Util.BUTTON_RIGHT)){
@@ -42,14 +38,12 @@ public class RunningLeftState extends PlayerState {
 
     @Override
     public void update(Player player) {
-        Log.i("states", "update RunningLeftState");
         player.updatePosition(new Vector2f(-player.SPEED * DisplayManager.getFrameTimeSeconds(), 0));
         runningLeftAnimation.update(DisplayManager.getCurrentTime());
     }
 
     @Override
     public void exit() {
-        Log.i("states", "update RunningLeftState");
         runningLeftAnimation.stop();
     }
 

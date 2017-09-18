@@ -1,7 +1,11 @@
 package com.example.claudio.platform.main;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ConfigurationInfo;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
 import android.util.Log;
 
 import com.example.claudio.platform.builder.ButtonBuilder;
@@ -9,6 +13,9 @@ import com.example.claudio.platform.builder.EntityCreationDirector;
 import com.example.claudio.platform.builder.PlayerBuilder;
 import com.example.claudio.platform.builder.TileMapBuilder;
 import com.example.claudio.platform.camera.Camera;
+import com.example.claudio.platform.communication.AsyncServer;
+import com.example.claudio.platform.communication.Data;
+import com.example.claudio.platform.communication.Server;
 import com.example.claudio.platform.entities.Button;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.entities.Player;
@@ -17,11 +24,13 @@ import com.example.claudio.platform.physicsEngine.Physics;
 import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.renderEngine.Renderer;
 import com.example.claudio.platform.terrains.TileMap;
+import com.example.claudio.platform.text.GLText;
 import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
 
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,16 +60,27 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     private Camera camera;
 
-    public GLRenderer(int width, int height){
+    private Server server;
+
+    private Context context;
+
+
+    public GLRenderer(Context context, int width, int height){
+        this.context = context;
         this.width  = width;
         this.height = height;
         physics = new Physics();
+
+        Data.setDataDimension(16);
     }
 
     public List<Button> getButtons(){return buttons;}
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        server = new Server();
+        new Thread(server).start();
+
         Log.i("point", "Creating tileMap");
         TileMapBuilder tileMapBuilder = new TileMapBuilder();
         tileMapBuilder.createEntity();
@@ -103,8 +123,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-        //GLES20.glEnable(GLES20.GL_CULL_FACE);
-        //GLES20.glCullFace(GLES20.GL_BACK);
 
         camera = new Camera(new Vector3f(0,0,0), new Vector3f(0,0,-1), new Vector3f(0,1,0));//position, look, up
         x=0;y=0;
@@ -134,5 +152,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             renderable.handleInput();
         physics.update(physical, tileMap);
         renderer.render(renderables, camera);
+
+        Data.setData(ByteBuffer.allocate(20).putFloat(playerPosition.x).putFloat(playerPosition.y)
+                .putFloat(player.SPEED).putFloat(player.JUMP_SPEED).putInt(DisplayManager.getFps()).array());
+
     }
 }

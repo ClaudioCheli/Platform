@@ -1,14 +1,10 @@
 package com.example.claudio.platform.tile;
 
-import android.util.Log;
-
 import com.example.claudio.platform.textures.Texture;
 import com.example.claudio.platform.toolBox.BoundingBox;
 import com.example.claudio.platform.toolBox.Vector2f;
 
-import java.nio.FloatBuffer;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,10 +34,8 @@ public class Tileset {
     public void setBoundingBoxes(Map<Integer, BoundingBox> boxes){this.boundingBoxes = new HashMap<>(boxes);}
     public BoundingBox getBoundingBox(int tileNumber){
         if(boundingBoxes.containsKey(tileNumber)) {
-            //Log.i("physic","    found box " + tileNumber);
             return boundingBoxes.get(tileNumber);
         } else {
-            //Log.i("physic","    box " + tileNumber + " not found");
             return null;
         }
     }

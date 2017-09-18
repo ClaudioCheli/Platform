@@ -10,7 +10,6 @@ import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
@@ -136,7 +135,6 @@ public abstract class Shader {
             e.printStackTrace();
         }
         String shader = stringBuilder.toString();
-        //Log.i("point", shader);
         int shaderID = GLES30.glCreateShader(type);
         GLES30.glShaderSource(shaderID, shader);
         GLES30.glCompileShader(shaderID);

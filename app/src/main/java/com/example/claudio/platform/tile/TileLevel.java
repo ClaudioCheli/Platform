@@ -1,7 +1,5 @@
 package com.example.claudio.platform.tile;
 
-import android.util.Log;
-
 import com.example.claudio.platform.toolBox.Vector2f;
 
 import java.nio.ByteBuffer;

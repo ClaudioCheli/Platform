@@ -1,7 +1,6 @@
 package com.example.claudio.platform.builder;
 
 import android.content.res.XmlResourceParser;
-import android.util.Log;
 
 import com.example.claudio.platform.R;
 import com.example.claudio.platform.animations.Animation;
@@ -42,17 +41,13 @@ public class ButtonBuilder extends EntityBuilder {
 
     @Override
     public void createEntity() {
-        Log.i("point", "ButtonBuilder: creating entity");
         entity = new Button();
         entity.setType(buttonTipe);
         buttonsFileParser = MainActivity.context.getResources().getXml(BUTTONS_FILE);
-
-        Log.i("point", "ButtonBuilder: entity created");
     }
 
     @Override
     public void createTile() {
-        Log.i("point", "ButtonBuilder: creating tile");
         buttonsDefParser  = MainActivity.context.getResources().getXml(BUTTONS_DEF);
         int eventType   = -1;
         int tileWidth   =  0;
@@ -78,15 +73,12 @@ public class ButtonBuilder extends EntityBuilder {
         Vector3f position = new Vector3f();
         switch (buttonTipe){
             case Util.BUTTON_LEFT:
-                Log.i("builder", "button_left");
                 position.x = 10; position.y = 900;
                 break;
             case Util.BUTTON_RIGHT:
-                Log.i("builder", "button_right");
                 position.x = 300; position.y = 900;
                 break;
             case Util.BUTTON_UP:
-                Log.i("builder", "button_up");
                 position.x = 1700; position.y = 900;
                 break;
         }
@@ -94,12 +86,10 @@ public class ButtonBuilder extends EntityBuilder {
         tile.setRotation(new Vector3f(0,0,1), 0);
         tile.setScale(new Vector3f(1,1,1));
         entity.setTile(tile);
-        Log.i("point", "ButtonBuilder: tile created");
     }
 
     @Override
     public void createTileset() {
-        Log.i("point", "ButtonBuilder: creating tileset");
         buttonsDefParser  = MainActivity.context.getResources().getXml(BUTTONS_DEF);
         int eventType = -1;
         int textureWidth = 0, textureHeight = 0, tilesNumber = 0, columns = 0,
@@ -136,12 +126,10 @@ public class ButtonBuilder extends EntityBuilder {
         List<Tileset> tilesets = new ArrayList<>();
         tilesets.add(tileset);
         entity.setTileset(tilesets);
-        Log.i("point", "ButtonBuilder: tileset created");
     }
 
     @Override
     public void createAnimation() {
-        Log.i("point", "ButtonBuilder: creating animation");
         buttonsDefParser  = MainActivity.context.getResources().getXml(BUTTONS_DEF);
         int eventType = -1;
         int tileId = 0;
@@ -181,21 +169,16 @@ public class ButtonBuilder extends EntityBuilder {
         List<Animation> animations = new ArrayList<>();
         animations.add(new UiAnimation(1, ids));
         entity.setAnimation(animations);
-        Log.i("point", "ButtonBuilder: animation created");
     }
 
     @Override
     public void createShader() {
-        Log.i("point", "ButtonBuilder: creating shader");
         UiShader shader = new UiShader();
         entity.setShader(shader);
-        Log.i("point", "ButtonBuilder: shader created");
     }
 
     @Override
     public void bindBuffers() {
-        Log.i("point", "ButtonBuilder: binding buffer");
         entity.bindBuffers();
-        Log.i("point", "ButtonBuilder: buffer binded");
     }
 }

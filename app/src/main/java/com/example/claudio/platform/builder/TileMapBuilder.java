@@ -1,7 +1,6 @@
 package com.example.claudio.platform.builder;
 
 import android.content.res.XmlResourceParser;
-import android.util.Log;
 
 import com.example.claudio.platform.R;
 import com.example.claudio.platform.main.MainActivity;
@@ -70,46 +69,31 @@ public class TileMapBuilder {
                             tileset.setNumberOfColumns(textureWidth / tileWidth);
                             tileset.setTexture(new Texture(R.drawable.terrain));
                             tilesets.add(tileset);
-                            /*Log.i("builder","   tileset " + tileMapDefParser.getAttributeValue(null,"name"));
-                            Log.i("builder","       texture width " + textureWidth);
-                            Log.i("builder","       texture height " + textureHeight);
-                            Log.i("builder","       tile width " + tileWidth);
-                            Log.i("builder","       tile height " + tileHeight);
-                            Log.i("builder","   end tileset " + tileMapDefParser.getAttributeValue(null,"name"));
-                            */break;
+                            break;
                         case "tile":
                             tileID = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "id"))+1;
-                            //Log.i("builder","       tileID: " + tileID);
                             break;
                         case "object":
                             boxType = tileMapDefParser.getAttributeValue(null, "type");
-                            //Log.i("builder","       boxType: " + boxType);
                             boundingBoxPosition.x = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "x"));
                             boundingBoxPosition.y = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "y"));
-                            //Log.i("builder","       boundingBoxPosition: " + boundingBoxPosition.x + ", " + boundingBoxPosition.y);
                             if(boxType.equalsIgnoreCase("square")) {
                                 boundingBoxDimension.x = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "width"));
                                 boundingBoxDimension.y = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "height"));
-                                //Log.i("builder","       boundingBoxDimension: " + boundingBoxDimension.x + ", " + boundingBoxDimension.y);
                             }
                             break;
                         case "polygon":
                             String allPoints = tileMapDefParser.getAttributeValue(null, "points");
                             String point[] = allPoints.split(" ");
-                            //Log.i("builder","       point: " + point[0] + " " + point[1]);
                             String coordinate[];
                             coordinate = point[0].split(",");
-                            //Log.i("builder","       coordinate1: " + coordinate[0] + " " + coordinate[1]);
                             boundingBoxEndpoints[0] = new Vector2f();
                             boundingBoxEndpoints[0].x = Integer.parseInt(coordinate[0]);
                             boundingBoxEndpoints[0].y = Integer.parseInt(coordinate[1]);
                             coordinate = point[1].split(",");
-                            //Log.i("builder","       coordinate2: " + coordinate[0] + " " + coordinate[1]);
                             boundingBoxEndpoints[1] = new Vector2f();
                             boundingBoxEndpoints[1].x = Integer.parseInt(coordinate[0]);
                             boundingBoxEndpoints[1].y = Integer.parseInt(coordinate[1]);
-                            //Log.i("builder","       boundingBoxEndPosition: " + boundingBoxEndpoints[0].x + ", " + boundingBoxEndpoints[0].y + ", "
-                            //                                                    +   boundingBoxEndpoints[1].x + ", " + boundingBoxEndpoints[1].y);
                             break;
                     }
                 }else if(eventType == tileMapDefParser.END_TAG){
@@ -118,15 +102,12 @@ public class TileMapBuilder {
                         case "tile":
                             if(boxType.equalsIgnoreCase("square")) {
                                 boundingBoxes.put(tileID, new SquareBoundingBox(new Vector2f(boundingBoxPosition), new Vector2f(boundingBoxDimension)));
-                                //Log.i("builder","       create SquareBoundingBox");
                             }
                             else if(boxType.equalsIgnoreCase("line")) {
                                 boundingBoxes.put(tileID, new LineBoundingBox(new Vector2f(boundingBoxPosition), boundingBoxEndpoints));
-                                //Log.i("builder","       create LineBoundingBox");
                             }
                             break;
                         case "tileset":
-                            //Log.i("builder","       set boundingbox");
                             tileset.setBoundingBoxes(boundingBoxes);
                             break;
                     }
@@ -167,24 +148,15 @@ public class TileMapBuilder {
                             level.setLevelHeight(Integer.parseInt(tileMapFileParser.getAttributeValue(null, "height")));
                             level.setTileWidth(tileWidth);
                             level.setTileHeight(tileHeight);
-                            /*Log.i("point","             level " + tileMapFileParser.getAttributeValue(null, "name"));
-                            Log.i("point","                 level width " + tileMapFileParser.getAttributeValue(null, "width"));
-                            Log.i("point","                 level height " + tileMapFileParser.getAttributeValue(null, "height"));
-                            Log.i("point","                 tile width " + tileWidth);
-                            Log.i("point","                 tile height " + tileHeight);
-                            */
                         }
                         break;
                     case XmlResourceParser.TEXT:
-                        //Log.i("point","         get layer data");
                         data = tileMapFileParser.getText();
                         break;
                     case XmlResourceParser.END_TAG:
                         if(tagName.equalsIgnoreCase("data")){
-                            //Log.i("point","         set layer data");
                             level.setData(data);
                         } else if(tagName.equalsIgnoreCase("layer")){
-                            //Log.i("point","         add level");
                             level.calculatePositions();
                             tileLevels.add(level);
                         }

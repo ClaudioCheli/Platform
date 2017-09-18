@@ -1,7 +1,5 @@
 package com.example.claudio.platform.finiteStateMachines;
 
-import android.util.Log;
-
 import com.example.claudio.platform.entities.Player;
 import com.example.claudio.platform.manager.DisplayManager;
 import com.example.claudio.platform.toolBox.Input;
@@ -15,14 +13,12 @@ public class IdleRightState extends PlayerState {
 
     @Override
     public void enter(Player player) {
-        Log.i("states", "enter idleRightState");
         idleRightAnimation.start(DisplayManager.getCurrentTime());
     }
 
     @Override
     public PlayerState handleInput(Player player) {
         if(Input.isKeyDown(Util.BUTTON_LEFT)){
-            Log.i("states", "idleRightState return runningLeftState");
             exit();
             return runningLeftState;
         }
@@ -42,13 +38,11 @@ public class IdleRightState extends PlayerState {
 
     @Override
     public void update(Player player) {
-        Log.i("states", "update idleRightState");
         idleRightAnimation.update(DisplayManager.getCurrentTime());
     }
 
     @Override
     public void exit() {
-        Log.i("states", "exit idleRightState");
         idleRightAnimation.stop();
     }
 

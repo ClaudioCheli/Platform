@@ -1,7 +1,6 @@
 package com.example.claudio.platform.toolBox;
 
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.claudio.platform.entities.Button;
@@ -27,7 +26,6 @@ public class Input {
 
 
     public static void checkInput(MotionEvent event, List<Button> buttons){
-        Log.i("input", "check input");
         int pointerIndex    = event.getActionIndex();
         int pointerId       = event.getPointerId(pointerIndex);
         int maskedAction    = event.getActionMasked();
@@ -39,8 +37,8 @@ public class Input {
             case MotionEvent.ACTION_POINTER_DOWN:
                 boolean found    = false;
                 int     i       = 0;
-                int     buttonType    = -1;
-                while(found == false && i < buttons.size()){
+                int     buttonType;
+                while(!found && i < buttons.size()){
                     if(Collision.checkCollision(new Vector2f(x, y), buttons.get(i).getBoundingBox())){
                         found = true;
                         buttonType = buttons.get(i).getType();

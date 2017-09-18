@@ -1,7 +1,5 @@
 package com.example.claudio.platform.shaders;
 
-import android.util.Log;
-
 import com.example.claudio.platform.R;
 import com.example.claudio.platform.toolBox.Util;
 
@@ -26,16 +24,9 @@ public class TileMapShader extends Shader {
     @Override
     protected void getAllUniformLocations() {
         location_viewMatrix 			= super.getUniformLocation("view");
-        //Log.i("error", "location_viewMatrix " + location_viewMatrix);
-        //Util.checkError();
         location_projectionMatrix 		= super.getUniformLocation("projection");
-        //Log.i("error", "location_projectionMatrix " + location_projectionMatrix);
-        Util.checkError();
         location_tilesetNumberOfRows	= super.getUniformLocation("tilesetNumberOfRows");
-        //Log.i("error", "location_tilesetNumberOfRows " + location_tilesetNumberOfRows);
-        Util.checkError();
         location_tilesetNumberOfColumns = super.getUniformLocation("tilesetNumberOfColumns");
-        //Log.i("error", "location_tilesetNumberOfColumns " + location_tilesetNumberOfColumns);
         Util.checkError();
     }
 

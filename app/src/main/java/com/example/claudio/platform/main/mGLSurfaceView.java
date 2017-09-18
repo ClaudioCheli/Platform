@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.claudio.platform.communication.Server;
 import com.example.claudio.platform.entities.Button;
 import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.physicsEngine.Collision;
@@ -23,10 +24,8 @@ public class mGLSurfaceView extends GLSurfaceView{
     public mGLSurfaceView(Context context, int width, int height){
         super(context);
         setEGLContextClientVersion(3);
-        long mainThread = Thread.currentThread().getId();
-        Log.i("playerBuilder", " main thread " + mainThread);
-        // Set GLRenderer as renderer
-        mRenderer = new GLRenderer(width, height);
+
+        mRenderer = new GLRenderer(context ,width, height);
         setRenderer(mRenderer);
     }
 

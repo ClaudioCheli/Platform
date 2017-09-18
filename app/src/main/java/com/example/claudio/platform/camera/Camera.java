@@ -39,7 +39,6 @@ public class Camera {
         this.position.z = position.z;
         this.look.x = position.x;
         this.look.y = position.y;
-        //Matrix.setIdentityM(view, 0);
 
         Matrix.setLookAtM(view, 0, position.x, position.y, position.z,
                 look.x, look.y, look.z, up.x, up.y, up.z);

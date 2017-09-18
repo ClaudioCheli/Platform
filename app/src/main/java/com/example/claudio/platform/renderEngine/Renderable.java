@@ -12,5 +12,4 @@ public interface Renderable {
     void bindProjectionMatrix(float[] projectionMatrix);
     void bindViewMatrix(float[] viewMatrix);
 
-    //void clear();
 }

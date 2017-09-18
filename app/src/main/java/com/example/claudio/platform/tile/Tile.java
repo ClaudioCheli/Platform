@@ -1,7 +1,6 @@
 package com.example.claudio.platform.tile;
 
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
@@ -18,7 +17,6 @@ import java.nio.IntBuffer;
 public class Tile {
 
     private Vector2f dimension = new Vector2f(1,1);
-    //private Vector2f movement = new Vector2f(0,0);
     private Vector3f position = new Vector3f(0,0,0);
     private float rotationAngle = 0;
     private Vector3f rotationAxis = new Vector3f(0,0,1);
@@ -55,13 +53,6 @@ public class Tile {
             vertex[i + 1]   *= dim.y;
         }
     }
-
-    /*public void updateModelMatrix(){
-        Matrix.translateM(modelMatrix, 0, movement.x, movement.y, 0);
-        Matrix.rotateM(modelMatrix, 0, rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
-        Matrix.scaleM(modelMatrix, 0, scale.x, scale.y, scale.z);
-        movement.clear();
-    }*/
 
     public void resetModelMatrix(){
         Matrix.setIdentityM(modelMatrix, 0);

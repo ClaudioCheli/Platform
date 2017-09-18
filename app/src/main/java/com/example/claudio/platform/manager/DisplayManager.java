@@ -25,14 +25,25 @@ public class DisplayManager {
     private static long  lastFrameTime;
     private static float delta;
 
+    private static long lastFPS = 0;
+    private static int tmpFPS = 0;
+    private static int fps = 0;
+
     public static void start(){
-        lastFrameTime= getCurrentTime();
+        lastFrameTime = getCurrentTime();
+        lastFPS = getCurrentTime();
     }
 
     public static void update(){
         long currentFrameTime   = getCurrentTime();
         delta                   = (currentFrameTime - lastFrameTime);
         lastFrameTime           = currentFrameTime;
+        if(getCurrentTime() - lastFPS > 1000) {
+            fps = tmpFPS;
+            tmpFPS = 0;
+            lastFPS += 1000;
+        }
+        tmpFPS++;
     }
 
     /**
@@ -55,6 +66,10 @@ public class DisplayManager {
      */
     public static float getFrameTimeSeconds(){
         return delta/1000f;
+    }
+
+    public static int getFps() {
+        return fps;
     }
 
 }

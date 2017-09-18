@@ -26,13 +26,9 @@ public class UiShader extends Shader {
     @Override
     protected void getAllUniformLocations() {
         location_modelMatrix 			= super.getUniformLocation("model");
-        Util.checkError();
         location_projectionMatrix 		= super.getUniformLocation("projection");
-        Util.checkError();
         location_textureIndex			= super.getUniformLocation("textureIndex");
-        Util.checkError();
         location_tilesetNumberOfRows	= super.getUniformLocation("tilesetNumberOfRows");
-        Util.checkError();
         location_tilesetNumberOfColumns = super.getUniformLocation("tilesetNumberOfColumns");
         Util.checkError();
     }

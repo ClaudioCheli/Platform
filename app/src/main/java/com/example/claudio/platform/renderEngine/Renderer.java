@@ -2,7 +2,6 @@ package com.example.claudio.platform.renderEngine;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.example.claudio.platform.camera.Camera;
 
@@ -31,9 +30,6 @@ public class Renderer {
             renderable.bindViewMatrix(camera.getViewMatrix());
             renderable.render();
         }
-        /*for(Renderable renderable : renderables){
-            renderable.clear();
-        }*/
     }
 
     public void clear() {
@@ -42,13 +38,7 @@ public class Renderer {
     }
 
     public void setProjectionMatrix(int width, int height){
-        Log.i("point", "renderer: projectionMatrixAllocated");
-        //float ratio = ((float) width) / ((float) height);
-        //Log.i("point", "MasterRenderer: ratioCalculated: " + ratio + ", width: " + width + ", height: " + height);
-        //float[] m, int mOffset, float left, float right, float bottom, float top, float near, float far
-        //Matrix.orthoM(projectionMatrix, 0, -ratio, ratio, -1, 1, NEAR_PLANE, FAR_PLANE);
         Matrix.orthoM(projectionMatrix, 0, 0, width, height, 0, NEAR_PLANE, FAR_PLANE);
-        Log.i("point", "renderer: ortoMatrixCalculated");
     }
 
 }

@@ -1,32 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="terrain" width="2048" height="2048" tilewidth="64" tileheight="64" tilesNumber="1024">
-    <!-- type:
-            T = terrain_tileset
-            S = sky
-            H = half terrain_tileset
-    -->
-    <tile id="1"    type="T"/>
-    <tile id="2"    type="T"/>
-    <tile id="3"    type="T"/>
-    <tile id="4"    type="T"/>
-    <tile id="15"   type="T"/>
-    <tile id="16"   type="T"/>
-    <tile id="33"   type="T"/>
-    <tile id="34"   type="T"/>
-    <tile id="35"   Type="T"/>
-    <tile id="36"   type="T"/>
-    <tile id="47"   type="T"/>
-    <tile id="48"   type="T"/>
-    <tile id="65"   type="T"/>
-    <tile id="66"   type="T"/>
-    <tile id="97"   type="T"/>
-    <tile id="98"   type="T"/>
-    <tile id="129"  type="T"/>
-    <tile id="130"  type="T"/>
-    <tile id="161"  type="T"/>
-    <tile id="162"  type="T"/>
-    <tile id="193"  type="S"/>
-    <tile id="194"  type="H"    left="64"   right="0"/>
-    <tile id="225"  type="H"    left="64"   right="0"/>
-    <tile id="226"  type="T"/>
+    <image source="terrain.png" width="2048" height="2048"/>
+    <tile id="0">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="1">
+        <objectgroup draworder="index">
+            <object id="2" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="64">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="65">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="66">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="67">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="128">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="129">
+        <objectgroup draworder="index">
+            <object id="1" type="square" x="0" y="0" width="64" height="64"/>
+        </objectgroup>
+    </tile>
+    <tile id="193">
+        <objectgroup draworder="index">
+            <object id="3" type="line" x="0" y="0">
+                <polygon points="0,64 64,0 64,64"/>
+            </object>
+        </objectgroup>
+    </tile>
+    <tile id="224">
+        <objectgroup draworder="index">
+            <object id="3" type="line" x="0" y="0">
+                <polygon points="0,64 64,0 64,64"/>
+            </object>
+        </objectgroup>
+    </tile>
+    <tile id="256">
+        <objectgroup draworder="index">
+            <object id="1" type="line" x="0" y="0">
+                <polygon points="0,0 64,64 0,64"/>
+            </object>
+        </objectgroup>
+    </tile>
+    <tile id="289">
+        <objectgroup draworder="index">
+            <object id="1" type="line" x="0" y="0">
+                <polygon points="0,0 64,64 0,64"/>
+            </object>
+        </objectgroup>
+    </tile>
 </tileset>
