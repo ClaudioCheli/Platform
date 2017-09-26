@@ -9,7 +9,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-import com.example.claudio.platform.communication.AsyncServer;
 import com.example.claudio.platform.communication.Server;
 
 /**

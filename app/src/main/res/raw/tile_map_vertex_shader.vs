@@ -28,7 +28,7 @@ void main(){
     	float column  	 = mod(texID, numberOfColumns);
     	float row     	 = floor((texID) / numberOfRows);
     	vec2 offset 	 = vec2(column/numberOfColumns, row/numberOfRows);
-    	texCoordinate	 = vec2( vec2(texCoord.x/numberOfColumns, texCoord.y/numberOfRows) + offset );
+    	texCoordinate	 = vec2( vec2(0.968*texCoord.x/numberOfColumns, texCoord.y/numberOfRows) + offset );
     	draw = 1;
     } else {
     	draw = 0;

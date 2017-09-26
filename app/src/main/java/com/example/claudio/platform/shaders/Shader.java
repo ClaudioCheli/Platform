@@ -8,6 +8,7 @@ import com.example.claudio.platform.main.MainActivity;
 import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
+import com.example.claudio.platform.toolBox.Vector4f;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -94,6 +95,10 @@ public abstract class Shader {
 
     protected void loadFloat(int location, float value){
         GLES20.glUniform1f(location, value);
+    }
+
+    protected void loadVector4f(int location, Vector4f vector) {
+        GLES20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
     }
 
     protected void loadVector3f(int location, Vector3f vector){
