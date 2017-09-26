@@ -65,7 +65,7 @@ public class PlayerBuilder extends EntityBuilder {
         }
 
         Tile tile = new Tile(new Vector2f(tileWidth, tileHeight));
-        tile.setPosition(new Vector3f(1790,0,0));
+        tile.setPosition(new Vector3f(5000,0,0));
         tile.setRotation(new Vector3f(0,0,1), 0);
         tile.setScale(new Vector3f(1f,1f,1f));
         entity.setTile(tile);

@@ -63,8 +63,8 @@ public class Physics {
         Tileset tileset = tileMap.getTileset(0);
 
         int tileID = level.getTileId(tile);
-        BoundingBox box = tileset.getBoundingBox(tileID);
-        Vector2f tilePosition = level.getTilePositions(tile);
+        /*BoundingBox box = tileset.getBoundingBox(tileID);
+        Vector2f tilePosition = level.getTilePositions(tile);*/
 
         tileID = level.getTileId(tileUnd);
         BoundingBox boxUnd = tileset.getBoundingBox(tileID);
@@ -74,9 +74,9 @@ public class Physics {
         BoundingBox boxUndUnd = tileset.getBoundingBox(tileID);
         Vector2f tilePositionUndUnd = level.getTilePositions(tileUndUnd);
 
-        tileID = level.getTileId(tileDx);
+        /*tileID = level.getTileId(tileDx);
         BoundingBox boxDx = tileset.getBoundingBox(tileID);
-        Vector2f tilePositionDx = level.getTilePositions(tileDx);
+        Vector2f tilePositionDx = level.getTilePositions(tileDx);*/
 
         tileID = level.getTileId(tileUndDx);
         BoundingBox boxUndDx = tileset.getBoundingBox(tileID);
@@ -86,35 +86,51 @@ public class Physics {
         BoundingBox boxUndUndDx = tileset.getBoundingBox(tileID);
         Vector2f tilePositionUndUndDx = level.getTilePositions(tileUndUndDx);
 
-        if (box != null) {
+        /*if (box != null) {
             box.setPosition(tilePosition);
             if (boundigBoxesCollisions[0] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), box))
                 collisionPosition = calculateCollisionPoint(box.getEndpoints(), entityPosition);
-        }
+        }*/
         if (boxUnd != null) {
             boxUnd.setPosition(tilePositionUnd);
             if (boundigBoxesCollisions[1] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUnd))
-                collisionPosition = calculateCollisionPoint(boxUnd.getEndpoints(), entityPosition);
+                collisionPosition = calculateCollisionPoint(boxUnd.getEndpoints(), entityPosition.x + 64);
+            else {
+                if(boxUndUnd != null) {
+                    boxUndUnd.setPosition(tilePositionUndUnd);
+                    if(boundigBoxesCollisions[2] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUnd))
+                        collisionPosition = calculateCollisionPoint(boxUndUnd.getEndpoints(), entityPosition.x + 64);
+                }
+            }
+        } else {
+            if(boxUndUnd != null) {
+                boxUndUnd.setPosition(tilePositionUndUnd);
+                if(boundigBoxesCollisions[2] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUnd))
+                    collisionPosition = calculateCollisionPoint(boxUndUnd.getEndpoints(), entityPosition.x + 64);
+            }
         }
-        if (boxUndUnd != null) {
-            boxUndUnd.setPosition(tilePositionUndUnd);
-            if (boundigBoxesCollisions[2] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUnd))
-                collisionPosition = calculateCollisionPoint(boxUndUnd.getEndpoints(), entityPosition);
-        }
-        if (boxDx != null) {
+       /* if (boxDx != null) {
             boxDx.setPosition(tilePositionDx);
             if (boundigBoxesCollisions[3] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxDx))
                 collisionPosition = calculateCollisionPoint(boxDx.getEndpoints(), entityPosition);
-        }
+        }*/
         if (boxUndDx != null) {
             boxUndDx.setPosition(tilePositionUndDx);
             if (boundigBoxesCollisions[4] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndDx))
-                collisionPosition = calculateCollisionPoint(boxUndDx.getEndpoints(), entityPosition);
-        }
-        if (boxUndUndDx != null) {
-            boxUndUndDx.setPosition(tilePositionUndUndDx);
-            if (boundigBoxesCollisions[5] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUndDx))
-                collisionPosition = calculateCollisionPoint(boxUndUndDx.getEndpoints(), entityPosition);
+                collisionPosition = calculateCollisionPoint(boxUndDx.getEndpoints(), entityPosition.x + 64);
+            else {
+                if(boxUndUndDx != null) {
+                    boxUndUndDx.setPosition(tilePositionUndUndDx);
+                    if(boundigBoxesCollisions[5] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUndDx))
+                        collisionPosition = calculateCollisionPoint(boxUndUndDx.getEndpoints(), entityPosition.x + 64);
+                }
+            }
+        } else {
+            if(boxUndUndDx != null) {
+                boxUndUndDx.setPosition(tilePositionUndUndDx);
+                if(boundigBoxesCollisions[5] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndUndDx))
+                    collisionPosition = calculateCollisionPoint(boxUndUndDx.getEndpoints(), entityPosition.x + 64);
+            }
         }
 
         if (entityPosition.y < 850)
@@ -130,13 +146,15 @@ public class Physics {
             entity.setJumping(false);
     }
 
-    private Vector2f calculateCollisionPoint(Vector2f[] endpoints, Vector2f entityPosition){
+    private Vector2f calculateCollisionPoint(Vector2f[] endpoints, float entityPosition){
         Vector2f a = endpoints[0];
         Vector2f b = endpoints[1];
-        float yLine = (b.y * (entityPosition.x - a.x) - a.y * (entityPosition.x - b.x)) / (b.x - a.x);
-        if(a.y == b.y)
-            return new Vector2f(entityPosition.x, yLine-128);
-        return new Vector2f(entityPosition.x, yLine-64);
+        float yLine = (b.y * (entityPosition - a.x) - a.y * (entityPosition - b.x)) / (b.x - a.x);
+        if(a.y == b.y) {
+            return new Vector2f(entityPosition-64, yLine - 128);
+        } else {
+            return new Vector2f(entityPosition-64, yLine - 128);
+        }
     }
 
 }

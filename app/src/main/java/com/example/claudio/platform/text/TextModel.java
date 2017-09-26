@@ -19,7 +19,6 @@ public class TextModel {
     private int[] VBO = new int[1];
     private int[] EBO = new int[1];
 
-    //--Constants--//
     final static int POSITION_CNT_2D = 2;              // Number of Components in Vertex Position for 2D
     final static int POSITION_CNT_3D = 3;              // Number of Components in Vertex Position for 3D
     final static int COLOR_CNT = 4;                    // Number of Components in Vertex Color
@@ -27,8 +26,7 @@ public class TextModel {
 
     final static int INDEX_SIZE = Short.SIZE / 8;      // Index Byte Size (Short.SIZE = bits)
 
-    //--Members--//
-    // NOTE: all members are constant, and initialized in constructor!
+
     public final int positionCnt;                      // Number of Position Components (2=2D, 3=3D)
     public final int vertexStride;                     // Vertex Stride (Element Size of a Single Vertex)
     public final int vertexSize;                       // Bytesize of a Single Vertex
@@ -69,7 +67,6 @@ public class TextModel {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
-        Log.i("error", "indices.capacity() " + indices.capacity());
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indices.capacity()*INDEX_SIZE,
                 indices, GLES20.GL_STATIC_DRAW);
 

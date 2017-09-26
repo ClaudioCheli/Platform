@@ -77,15 +77,15 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
 
 
-       // Data.setDataDimension(16);
+        Data.setDataDimension(16);
     }
 
     public List<Button> getButtons(){return buttons;}
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        //server = new Server();
-        //new Thread(server).start();
+        server = new Server();
+        new Thread(server).start();
 
         Log.i("point", "Creating tileMap");
         TileMapBuilder tileMapBuilder = new TileMapBuilder();
@@ -171,12 +171,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         physics.update(physical, tileMap);
         renderer.render(renderables, camera);
 
-        textRenderer.begin();
+        /*textRenderer.begin();
         textRenderer.render(texts, camera);
         textRenderer.end();
-
-        /*Data.setData(ByteBuffer.allocate(20).putFloat(playerPosition.x).putFloat(playerPosition.y)
-                .putFloat(player.SPEED).putFloat(player.JUMP_SPEED).putInt(DisplayManager.getFps()).array());
 */
+        Data.setData(ByteBuffer.allocate(20).putFloat(playerPosition.x).putFloat(playerPosition.y)
+                .putFloat(player.SPEED).putFloat(player.JUMP_SPEED).putInt(DisplayManager.getFps()).array());
+
     }
 }
