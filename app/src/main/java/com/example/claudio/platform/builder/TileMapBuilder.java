@@ -1,6 +1,7 @@
 package com.example.claudio.platform.builder;
 
 import android.content.res.XmlResourceParser;
+import android.util.Log;
 
 import com.example.claudio.platform.R;
 import com.example.claudio.platform.main.MainActivity;
@@ -32,8 +33,8 @@ public class TileMapBuilder {
 
     private TileMap tileMap;
 
-    private static final int TILEMAP_FILE = R.xml.level1;
-    private static final int TILEMAP_DEF = R.xml.terrain_tileset;
+    private static final int TILEMAP_FILE = R.xml.level0;
+    private static final int TILEMAP_DEF = R.xml.new_terrain_tileset;
 
     private XmlResourceParser tileMapDefParser;
     private XmlResourceParser tileMapFileParser;
@@ -122,6 +123,7 @@ public class TileMapBuilder {
         }
 
         tileMap.setTileset(tilesets);
+        Log.i("point", "Tileset created");
     }
 
     public void createTileLevels(){
@@ -171,6 +173,7 @@ public class TileMapBuilder {
         }
 
         tileMap.setTileLevels(tileLevels);
+        Log.i("point", "Tile level created");
     }
 
     public void createShader(){

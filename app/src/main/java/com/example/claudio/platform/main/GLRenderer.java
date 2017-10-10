@@ -13,9 +13,9 @@ import com.example.claudio.platform.camera.Camera;
 import com.example.claudio.platform.communication.Data;
 import com.example.claudio.platform.communication.Server;
 import com.example.claudio.platform.entities.Button;
-import com.example.claudio.platform.entities.Entity;
 import com.example.claudio.platform.entities.Player;
-import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.physicsEngine.PhysicModel;
+import com.example.claudio.platform.physicsEngine.Physical;
 import com.example.claudio.platform.physicsEngine.Physics;
 import com.example.claudio.platform.renderEngine.Renderable;
 import com.example.claudio.platform.renderEngine.Renderer;
@@ -23,13 +23,16 @@ import com.example.claudio.platform.terrains.TileMap;
 import com.example.claudio.platform.text.Font;
 import com.example.claudio.platform.text.Text;
 import com.example.claudio.platform.text.TextRenderer;
+import com.example.claudio.platform.time.Time;
 import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
 import com.example.claudio.platform.toolBox.Vector3f;
 import com.example.claudio.platform.toolBox.Vector4f;
 
 
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +54,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     private int height;
 
     private List<Renderable> renderables    = new ArrayList<>();
-    private List<Entity> physical           = new ArrayList<>();
+    private List<Physical> physical           = new ArrayList<>();
     private List<Button> buttons            = new ArrayList<>();
     private TileMap tileMap;
     private Player player;
@@ -66,7 +69,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     private Font roboto;
     List<Text> texts = new ArrayList<>();
-    Text fps;
+    Text forceInfo;
+    Text accelerationInfo;
+    Text velocityInfo;
+    Text positionInfo;
+    Text collisionText;
 
 
     public GLRenderer(Context context, int width, int height){
@@ -104,8 +111,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         director.setEntityBuilder(new PlayerBuilder());
         director.createEntity();
         player = (Player) director.getEntity();
+        player.setPhysicModel( new PhysicModel(player.getPosition(), new Vector2f(0.8f, 0.5f)) );
+        player.start();
         renderables.add(director.getEntity());
-        physical.add(director.getEntity());
+        physical.add((Physical) director.getEntity());
         Util.checkError();
         Log.i("point", "player Created");
 
@@ -127,23 +136,31 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Log.i("point", "button 3 created");
         Log.i("point", "buttons created");
 
-        roboto = new Font(context.getAssets(), "Roboto-Regular.ttf", 100, new Vector2f(2,2));
+        roboto = new Font(context.getAssets(), "Roboto-Regular.ttf", 50, new Vector2f(2,2));
 
-        fps = new Text("", new Vector2f(50,50), new Vector4f(1,1,1,1), roboto);
+        forceInfo = new Text("", new Vector2f(50,50), new Vector4f(1,1,1,1), roboto);
+        accelerationInfo = new Text("", new Vector2f(50,100), new Vector4f(1,1,1,1), roboto);
+        velocityInfo = new Text("", new Vector2f(50,150), new Vector4f(1,1,1,1), roboto);
+        positionInfo = new Text("", new Vector2f(50,200), new Vector4f(1,1,1,1), roboto);
+        collisionText = new Text("", new Vector2f(50,250), new Vector4f(1,1,1,1), roboto);
         //Text text2 = new Text("Hello World", new Vector2f(800,600), new Vector4f(0,1,0,0.2f), roboto);
 
-        texts.add(fps);
+        texts.add(forceInfo);
+        texts.add(accelerationInfo);
+        texts.add(velocityInfo);
+        texts.add(positionInfo);
+        texts.add(collisionText);
         //texts.add(text2);
 
         GLES20.glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        camera = new Camera(new Vector3f(0,0,0), new Vector3f(0,0,-1), new Vector3f(0,1,0));//position, look, up
+        camera = new Camera(new Vector3f(0,0,0), new Vector3f(0,0,-1), new Vector3f(0,1,0));//forceInfo, look, up
         x=0;y=0;
         renderer = new Renderer(width, height);
         textRenderer = new TextRenderer();
 
-        DisplayManager.start();
+        Time.start();
         Log.i("point", "GLRenderer: surfaceCreated");
     }
 
@@ -159,24 +176,29 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        DisplayManager.update();
-
-        fps.setText(Integer.toString(DisplayManager.getFps()));
+        Time.update();
 
         Vector2f playerPosition = player.getPosition();
+        PhysicModel model = player.getPhysicModel();
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.DOWN);
+        forceInfo.setText("TSx: " + df.format(model.getTargetSpeed().x) + " TSy: " + df.format(model.getTargetSpeed().y));
+        accelerationInfo.setText("Ax: " + df.format(model.getAcceleration().x) + " Ay: " + df.format(model.getAcceleration().y));
+        velocityInfo.setText("Vx: " + df.format(model.getCurrentSpeed().x) + " Vy: " + df.format(model.getCurrentSpeed().y));
+        positionInfo.setText("Px: " + df.format(model.getPosition().x) + " Py: " + df.format(model.getPosition().y));
         camera.move(new Vector3f(playerPosition.x-width/2,playerPosition.y-height/2,0));
 
         for(Renderable renderable : renderables)
             renderable.handleInput();
-        physics.update(physical, tileMap);
+        collisionText.setText(Boolean.toString(physics.update(physical, tileMap)));
         renderer.render(renderables, camera);
 
-        /*textRenderer.begin();
+        textRenderer.begin();
         textRenderer.render(texts, camera);
         textRenderer.end();
-*/
+
         Data.setData(ByteBuffer.allocate(20).putFloat(playerPosition.x).putFloat(playerPosition.y)
-                .putFloat(player.SPEED).putFloat(player.JUMP_SPEED).putInt(DisplayManager.getFps()).array());
+                .putFloat(player.SPEED).putFloat(player.JUMP_SPEED).putInt(Time.getFps()).array());
 
     }
 }

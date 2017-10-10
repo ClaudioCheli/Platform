@@ -167,15 +167,6 @@ public class Button extends Entity {
         tile.setPosition(new Vector3f(position.x, position.y, 0.0f));
     }
 
-    @Override
-    public void setJumping(boolean jumping) {
-
-    }
-
-    @Override
-    public boolean isJumping() {
-        return false;
-    }
 
     public BoundingBox getBoundingBox(){
         return boundingBox;

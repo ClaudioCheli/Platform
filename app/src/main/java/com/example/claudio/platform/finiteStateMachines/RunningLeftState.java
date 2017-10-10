@@ -1,7 +1,8 @@
 package com.example.claudio.platform.finiteStateMachines;
 
 import com.example.claudio.platform.entities.Player;
-import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.physicsEngine.Physics;
+import com.example.claudio.platform.time.Time;
 import com.example.claudio.platform.toolBox.Input;
 import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
@@ -14,7 +15,8 @@ public class RunningLeftState extends PlayerState {
 
     @Override
     public void enter(Player player) {
-        runningLeftAnimation.start(DisplayManager.getCurrentTime());
+        runningLeftAnimation.start(Time.getCurrentTime());
+        player.getPhysicModel().setTargetSpeed(new Vector2f(-Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
     }
 
     @Override
@@ -38,8 +40,9 @@ public class RunningLeftState extends PlayerState {
 
     @Override
     public void update(Player player) {
-        player.updatePosition(new Vector2f(-player.SPEED * DisplayManager.getFrameTimeSeconds(), 0));
-        runningLeftAnimation.update(DisplayManager.getCurrentTime());
+        player.getPhysicModel().setTargetSpeed(new Vector2f(-Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
+        //player.updatePosition(new Vector2f(-player.SPEED * Time.getFrameTimeSeconds(), 0));
+        runningLeftAnimation.update(Time.getCurrentTime());
     }
 
     @Override

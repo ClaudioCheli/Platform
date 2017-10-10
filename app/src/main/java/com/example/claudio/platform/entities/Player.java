@@ -6,6 +6,8 @@ import android.opengl.GLES30;
 
 import com.example.claudio.platform.animations.Animation;
 import com.example.claudio.platform.finiteStateMachines.PlayerState;
+import com.example.claudio.platform.physicsEngine.PhysicModel;
+import com.example.claudio.platform.physicsEngine.Physical;
 import com.example.claudio.platform.shaders.PlayerShader;
 import com.example.claudio.platform.shaders.Shader;
 import com.example.claudio.platform.tile.Tile;
@@ -20,13 +22,14 @@ import java.util.List;
 /**
  * Created by Claudio on 30/05/2016.
  */
-public class Player extends Entity{
+public class Player extends Entity implements Physical{
 
     private int[] VAO, VBO, EBO;
     private PlayerShader shader;
     private Tile tile;
     private List<Tileset> tilesets;
     private PlayerState state;
+    private PhysicModel physicModel;
     private boolean jumping = false;
 
     public static final float SPEED = 300;
@@ -36,6 +39,11 @@ public class Player extends Entity{
         VAO = new int[1];
         VBO = new int[1];
         EBO = new int[1];
+    }
+
+    public void start() {
+        state = PlayerState.idleRightState;
+        state.enter(this);
     }
 
     @Override
@@ -63,6 +71,8 @@ public class Player extends Entity{
     @Override
     public void update() {
         state.update(this);
+        //physicModel.update();
+        updatePosition();
     }
 
     @Override
@@ -115,12 +125,16 @@ public class Player extends Entity{
     @Override
     public void setAnimation(List<Animation> animations) {
         PlayerState.setAnimations(animations);
-        state = PlayerState.idleRightState;
-        state.enter(this);
+
     }
 
     @Override
     public void setType(int type){}
+
+    @Override
+    public void updatePosition(Vector2f position) {
+        increasePosition(new Vector3f(position.x,position.y,0.0f));
+    }
 
     @Override
     public void setShader(Shader shader) {
@@ -131,8 +145,9 @@ public class Player extends Entity{
 
     public int getVAO(){return VAO[0];}
 
-    public void updatePosition(Vector2f position){
-        increasePosition(new Vector3f(position.x,position.y,0.0f));
+    public void updatePosition(){
+        //increasePosition(new Vector3f(tile.getPosition().x-physicModel.getPosition().x, tile.getPosition().y-physicModel.getPosition().y, 0.0f));
+        setPosition(new Vector2f(physicModel.getPosition().x, physicModel.getPosition().y));
     }
 
     public Vector2f getPosition(){
@@ -145,7 +160,16 @@ public class Player extends Entity{
 
     public void increasePosition(Vector3f delta){
         tile.increasePosition(delta);
-        }
+    }
+
+    /*public void setPhysicModel(PhysicModel model){
+        physicModel = model;
+    }*/
+
+    /*public PhysicModel getPhysicModel() {
+        return physicModel;
+    }*/
+
 
     @Override
     public void setJumping(boolean jumping) {
@@ -181,4 +205,13 @@ public class Player extends Entity{
         GLES30.glBindVertexArray(0);
     }
 
+    @Override
+    public PhysicModel getPhysicModel() {
+        return physicModel;
+    }
+
+    @Override
+    public void setPhysicModel(PhysicModel model) {
+        this.physicModel = model;
+    }
 }

@@ -28,7 +28,6 @@ public abstract class Entity implements Renderable{
     public abstract Vector2f getPosition();
     public abstract void setPosition(Vector2f position);
 
-    public abstract void setJumping(boolean jumping);
-    public abstract boolean isJumping();
+
 
 }

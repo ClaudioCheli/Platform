@@ -1,10 +1,12 @@
 package com.example.claudio.platform.physicsEngine;
 
 import com.example.claudio.platform.entities.Entity;
+import com.example.claudio.platform.entities.Player;
 import com.example.claudio.platform.manager.DisplayManager;
 import com.example.claudio.platform.terrains.TileMap;
 import com.example.claudio.platform.tile.TileLevel;
 import com.example.claudio.platform.tile.Tileset;
+import com.example.claudio.platform.time.Time;
 import com.example.claudio.platform.toolBox.BoundingBox;
 import com.example.claudio.platform.toolBox.Vector2f;
 
@@ -17,37 +19,122 @@ import java.util.List;
 
 public class Physics {
 
-    private static final float GRAVITY = 600;
+    private static final float GRAVITY = 12;
+    public static final float HORIZONTAL_FORCE = 10;
+    public static final float VERTICAL_FORCE    = 90;
 
-    public void update(List<Entity> entities, TileMap tileMap){
-        for(Entity entity : entities)
-            applyGravity(entity, tileMap);
+    private Vector2f collisionPoint = new Vector2f();
+
+
+    public boolean update(List<Physical> physicals, TileMap tileMap) {
+        boolean collision = false;
+        for(Physical physical : physicals) {
+
+            PhysicModel model = physical.getPhysicModel();
+
+            /*float fy = model.getMass() * 9.8f;
+            float fx = model.getForce().x - (0.5f * model.getVelocity().x * model.getVelocity().x);
+            model.setForce(new Vector2f( fx, (float) (model.getForce().y + fy - 0.5 * model.getVelocity().y * model.getVelocity().y)));
+
+            if(model.getForce().y > 0) {
+                if(checkBottomCollision(model.getPosition(), tileMap)) {
+                    model.setForce(new Vector2f(model.getForce().x, 0));
+                    model.setVelocity(new Vector2f(model.getVelocity().x, 0));
+                    collision = true;
+                }
+            }*/
+            if(model.getTargetSpeed().y < GRAVITY){
+                model.setTargetSpeed(new Vector2f(model.getTargetSpeed().x, model.getTargetSpeed().y + GRAVITY));
+            } else {
+                model.setTargetSpeed(new Vector2f(model.getTargetSpeed().x, GRAVITY));
+            }
+
+            model.update();
+
+            Vector2f nextPosition = Vector2f.add(model.getPosition(), model.getCurrentSpeed());
+
+            if(checkBottomCollision(nextPosition, tileMap)){
+                model.setPosition(new Vector2f(nextPosition.x, collisionPoint.y));
+                collision = true;
+            } else {
+                model.setPosition(nextPosition);
+            }
+            if(!collision){
+                physical.setJumping(true);
+            } else {
+                physical.setJumping(false);
+            }
+
+
+            //applyGravity(physical, tileMap);
+        }
+        return collision;
     }
 
-    private void applyGravity(Entity entity, TileMap tileMap) {
-        Vector2f entityPosition = entity.getPosition();
-        Vector2f displacement = new Vector2f(0.0f, DisplayManager.getFrameTimeSeconds() * GRAVITY);
+    private boolean checkBottomCollision(Vector2f entityPosition, TileMap tileMap) {
+        int[] tiles = new int[4];
+        boolean[] collisions = new boolean[tiles.length];
+        int tile = (int) (TileMap.dimension.x * (int) ((entityPosition.y) / 64) + entityPosition.x / 64);
+        tiles[0] = (int) (tile + TileMap.dimension.x);          // tileUnd
+        tiles[1] = tiles[0] + 1;                                // tileUndDx
+        tiles[2] = (int) (tiles[0] + TileMap.dimension.x);      // tileUndUnd
+        tiles[3] = tiles[2] + 1;                                // tileUndUndDx
+
+        TileLevel level = tileMap.getTileLevel(0);
+        Tileset tileset = tileMap.getTileset(0);
+
+
+        boolean found = false;
+        BoundingBox box = null;
+        Vector2f tilePosition = null;
+        int i = 0, tileID;
+        while(found == false && i < tiles.length) {
+            collisions[i] = false;
+            tileID = level.getTileId(tiles[i]);
+            box = tileset.getBoundingBox(tileID);
+            tilePosition = level.getTilePositions(tiles[i]);
+            if(box != null) {
+                box.setPosition(tilePosition);
+                found = Collision.checkBottomCollision(new Vector2f(entityPosition.x + 64, entityPosition.y + 128), box);
+                if(found)
+                    collisions[i] = true;
+            }
+            i++;
+        }
+
+        for(int j=0; j<collisions.length; j++){
+            if(collisions[j]){
+                collisionPoint = calculateCollisionPoint(tileset.getBoundingBox(level.getTileId(tiles[j])).getEndpoints(), entityPosition.x + 64);
+            }
+        }
+
+        return found;
+    }
+
+    private void applyGravity(Entity physical, TileMap tileMap) {
+        Vector2f entityPosition = physical.getPosition();
+        Vector2f displacement = new Vector2f(0.0f, Time.getFrameTimeSeconds() * GRAVITY);
         Vector2f nextPosition = new Vector2f(entityPosition.x + displacement.x, entityPosition.y + displacement.y);
         Vector2f collisionPosition = nextPosition;
         boolean boundigBoxesCollisions[] = new boolean[6];
-        for (int i = 0; i < boundigBoxesCollisions.length; i++)
+        for(int i = 0; i < boundigBoxesCollisions.length; i++)
             boundigBoxesCollisions[i] = false;
 
         //---------
         List<BoundingBox> boxes = new ArrayList<>(12);
         int[] tiles = new int[12];
-        tiles[0] = (int) (TileMap.dimension.x * (int) ((entityPosition.y) / 64) + entityPosition.x / 64);
-        tiles[1] = tiles[0] + 1;
-        tiles[2] = (int) (tiles[0] + TileMap.dimension.x);
-        tiles[3] = tiles[2] + 1;
-        tiles[4] = (int) (tiles[2] + TileMap.dimension.x);
-        tiles[5] = tiles[4] + 1;
-        tiles[6] = (int) (tiles[0] - TileMap.dimension.x);
-        tiles[7] = tiles[6] + 1;
-        tiles[8] = tiles[0] - 1;
-        tiles[9] = tiles[2] - 1;
-        tiles[10] = tiles[1] + 1;
-        tiles[11] = tiles[3] + 1;
+        tiles[0] = (int) (TileMap.dimension.x * (int) ((entityPosition.y) / 64) + entityPosition.x / 64); //tile
+        tiles[1] = tiles[0] + 1;                                                                // tileDx
+        tiles[2] = (int) (tiles[0] + TileMap.dimension.x);                                      // tileUnd
+        tiles[3] = tiles[2] + 1;                                                                // tileUndDx
+        tiles[4] = (int) (tiles[2] + TileMap.dimension.x);                                      // tileUndUnd
+        tiles[5] = tiles[4] + 1;                                                                // tileUndUndDx
+        tiles[6] = (int) (tiles[0] - TileMap.dimension.x);                                      // tileUp
+        tiles[7] = tiles[6] + 1;                                                                // tileUpDx
+        tiles[8] = tiles[0] - 1;                                                                // tileSx
+        tiles[9] = tiles[2] - 1;                                                                // tileUndSx
+        tiles[10] = tiles[1] + 1;                                                               // tileDxDx
+        tiles[11] = tiles[3] + 1;                                                               // tileUndDxDx
 
         //--------
 
@@ -91,9 +178,9 @@ public class Physics {
             if (boundigBoxesCollisions[0] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), box))
                 collisionPosition = calculateCollisionPoint(box.getEndpoints(), entityPosition);
         }*/
-        if (boxUnd != null) {
+        if(boxUnd != null) {
             boxUnd.setPosition(tilePositionUnd);
-            if (boundigBoxesCollisions[1] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUnd))
+            if(boundigBoxesCollisions[1] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUnd))
                 collisionPosition = calculateCollisionPoint(boxUnd.getEndpoints(), entityPosition.x + 64);
             else {
                 if(boxUndUnd != null) {
@@ -114,9 +201,9 @@ public class Physics {
             if (boundigBoxesCollisions[3] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxDx))
                 collisionPosition = calculateCollisionPoint(boxDx.getEndpoints(), entityPosition);
         }*/
-        if (boxUndDx != null) {
+        if(boxUndDx != null) {
             boxUndDx.setPosition(tilePositionUndDx);
-            if (boundigBoxesCollisions[4] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndDx))
+            if(boundigBoxesCollisions[4] = Collision.checkBottomCollision(new Vector2f(nextPosition.x + 64, nextPosition.y + 128), boxUndDx))
                 collisionPosition = calculateCollisionPoint(boxUndDx.getEndpoints(), entityPosition.x + 64);
             else {
                 if(boxUndUndDx != null) {
@@ -133,27 +220,27 @@ public class Physics {
             }
         }
 
-        if (entityPosition.y < 850)
-            entity.updatePosition(collisionPosition.subtract(entityPosition));
+        if(entityPosition.y < 1100)
+            physical.updatePosition(collisionPosition.subtract(entityPosition));
 
         boolean found = false;
         int i = 0;
-        while (found == false && i < boundigBoxesCollisions.length) {
+        while(found == false && i < boundigBoxesCollisions.length) {
             found = boundigBoxesCollisions[i];
             i++;
         }
-        if (found)
-            entity.setJumping(false);
-    }
+        /*if(found)
+            physical.setJumping(false);
+    */}
 
-    private Vector2f calculateCollisionPoint(Vector2f[] endpoints, float entityPosition){
+    private Vector2f calculateCollisionPoint(Vector2f[] endpoints, float entityPosition) {
         Vector2f a = endpoints[0];
         Vector2f b = endpoints[1];
         float yLine = (b.y * (entityPosition - a.x) - a.y * (entityPosition - b.x)) / (b.x - a.x);
         if(a.y == b.y) {
-            return new Vector2f(entityPosition-64, yLine - 128);
+            return new Vector2f(entityPosition - 64, yLine - 128);
         } else {
-            return new Vector2f(entityPosition-64, yLine - 128);
+            return new Vector2f(entityPosition - 64, yLine - 128);
         }
     }
 

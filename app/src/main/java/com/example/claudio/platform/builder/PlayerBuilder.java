@@ -12,6 +12,7 @@ import com.example.claudio.platform.animations.playerAnimations.RunningLeftAnima
 import com.example.claudio.platform.animations.playerAnimations.RunningRightAnimation;
 import com.example.claudio.platform.entities.Player;
 import com.example.claudio.platform.main.MainActivity;
+import com.example.claudio.platform.physicsEngine.PhysicModel;
 import com.example.claudio.platform.shaders.PlayerShader;
 import com.example.claudio.platform.textures.Texture;
 import com.example.claudio.platform.tile.Tile;
@@ -65,9 +66,10 @@ public class PlayerBuilder extends EntityBuilder {
         }
 
         Tile tile = new Tile(new Vector2f(tileWidth, tileHeight));
-        tile.setPosition(new Vector3f(5000,0,0));
+        tile.setPosition(new Vector3f(300,768,0));
         tile.setRotation(new Vector3f(0,0,1), 0);
         tile.setScale(new Vector3f(1f,1f,1f));
+
         entity.setTile(tile);
     }
 
@@ -174,6 +176,7 @@ public class PlayerBuilder extends EntityBuilder {
             }
 
         }
+
         entity.setAnimation(animations);
     }
 

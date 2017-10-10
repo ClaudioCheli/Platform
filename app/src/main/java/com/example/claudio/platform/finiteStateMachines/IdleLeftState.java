@@ -1,9 +1,10 @@
 package com.example.claudio.platform.finiteStateMachines;
 
 import com.example.claudio.platform.entities.Player;
-import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.time.Time;
 import com.example.claudio.platform.toolBox.Input;
 import com.example.claudio.platform.toolBox.Util;
+import com.example.claudio.platform.toolBox.Vector2f;
 
 /**
  * Created by Claudio on 18/05/2017.
@@ -13,7 +14,8 @@ public class IdleLeftState extends PlayerState {
 
     @Override
     public void enter(Player player) {
-        idleLeftAnimation.start(DisplayManager.getCurrentTime());
+        idleLeftAnimation.start(Time.getCurrentTime());
+        player.getPhysicModel().setTargetSpeed(new Vector2f(0,0));
     }
 
     @Override
@@ -38,7 +40,8 @@ public class IdleLeftState extends PlayerState {
 
     @Override
     public void update(Player player) {
-        idleLeftAnimation.update(DisplayManager.getCurrentTime());
+        idleLeftAnimation.update(Time.getCurrentTime());
+        player.getPhysicModel().setTargetSpeed(new Vector2f(0,0));
     }
 
     @Override

@@ -105,8 +105,8 @@ public class Tile {
     }
 
     public void setPosition(Vector3f pos){
+        Matrix.translateM(modelMatrix, 0, pos.x-position.x, pos.y-position.y, position.z);
         position.x = pos.x; position.y = pos.y; position.z = pos.z;
-        Matrix.translateM(modelMatrix, 0, position.x, position.y, position.z);
     }
 
     public void setRotation(Vector3f rotationAxis, float rotationAngle){

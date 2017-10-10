@@ -1,7 +1,9 @@
 package com.example.claudio.platform.finiteStateMachines;
 
 import com.example.claudio.platform.entities.Player;
-import com.example.claudio.platform.manager.DisplayManager;
+import com.example.claudio.platform.physicsEngine.Physics;
+import com.example.claudio.platform.time.Time;
+import com.example.claudio.platform.time.Timer;
 import com.example.claudio.platform.toolBox.Input;
 import com.example.claudio.platform.toolBox.Util;
 import com.example.claudio.platform.toolBox.Vector2f;
@@ -12,14 +14,17 @@ import com.example.claudio.platform.toolBox.Vector2f;
 
 public class JumpingLeftState extends PlayerState {
 
-    private boolean buttonLeftPressed = false;
-    private float jumpStartTime = 0;
+    private boolean buttonLeftPressed   = false;
+    private boolean buttonRightPressed  = false;
+    private Timer timer;
 
     @Override
     public void enter(Player player) {
         player.setJumping(true);
-        jumpStartTime = DisplayManager.getCurrentTime();
-        jumpingLeftAnimation.start(DisplayManager.getCurrentTime());
+        timer = new Timer();
+        timer.start();
+        jumpingLeftAnimation.start(Time.getCurrentTime());
+        player.getPhysicModel().setTargetSpeed(new Vector2f(player.getPhysicModel().getTargetSpeed().x,-Physics.VERTICAL_FORCE));
     }
 
     @Override
@@ -29,15 +34,20 @@ public class JumpingLeftState extends PlayerState {
         }else if(Input.isKeyUp(Util.BUTTON_LEFT)){
             buttonLeftPressed = false;
         }
-        if(Input.isKeyUp(Util.BUTTON_RIGHT) && Input.isKeyUp(Util.BUTTON_LEFT) && Input.isKeyUp(Util.BUTTON_UP)){
+        if(Input.isKeyDown(Util.BUTTON_RIGHT)) {
+            buttonRightPressed = true;
+        } else if(Input.isKeyUp(Util.BUTTON_RIGHT)) {
+            buttonRightPressed = false;
+        }
+        if(Input.isKeyUp(Util.BUTTON_RIGHT) && Input.isKeyUp(Util.BUTTON_LEFT) && Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()){
             exit();
             return idleLeftState;
         }
-        if(Input.isKeyUp(Util.BUTTON_UP)){
+        if(Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()){
             exit();
             return idleLeftState;
         }
-        if(!player.isJumping()){
+        if(!player.isJumping() && !player.isJumping()){
             exit();
             return idleLeftState;
         }
@@ -46,19 +56,28 @@ public class JumpingLeftState extends PlayerState {
 
     @Override
     public void update(Player player) {
-        float horizontalVelocity    = 0;
+        /*float horizontalVelocity    = 0;
         float verticalVelocity      = 0;
         if(buttonLeftPressed && player.getPosition().y > 100)
-            horizontalVelocity = -player.SPEED * DisplayManager.getFrameTimeSeconds();
-        if(player.getPosition().y > 0 && DisplayManager.getCurrentTime()-jumpStartTime < 300)
-            verticalVelocity = -player.JUMP_SPEED * DisplayManager.getFrameTimeSeconds() * 2;
-        player.updatePosition(new Vector2f(horizontalVelocity, verticalVelocity));
-        jumpingLeftAnimation.start(DisplayManager.getCurrentTime());
+            horizontalVelocity = -player.SPEED * Time.getFrameTimeSeconds();
+        if(player.getPosition().y > 0 && Time.getCurrentTime()-jumpStartTime < 300)
+            verticalVelocity = -player.JUMP_SPEED * Time.getFrameTimeSeconds() * 2;
+        player.updatePosition(new Vector2f(horizontalVelocity, verticalVelocity));*/
+        /*if(timer.getElapsedTime() < 500) {
+            player.getPhysicModel().setTargetSpeed(new Vector2f(player.getPhysicModel().getTargetSpeed().x,-Physics.VERTICAL_FORCE));
+        }*/
+        if(buttonLeftPressed)
+            player.getPhysicModel().setTargetSpeed(new Vector2f(-Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
+        if(buttonRightPressed)
+            player.getPhysicModel().setTargetSpeed(new Vector2f(Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
+        if(!buttonLeftPressed && !buttonRightPressed)
+            player.getPhysicModel().setTargetSpeed(new Vector2f(0, player.getPhysicModel().getTargetSpeed().y));
+        jumpingLeftAnimation.start(Time.getCurrentTime());
     }
 
     @Override
     public void exit() {
-        jumpStartTime = 0;
+        timer.stop();
         jumpingLeftAnimation.stop();
     }
 
