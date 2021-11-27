@@ -1,0 +1,150 @@
+[
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_tile_map_fragment_shader.fs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\tile_map_fragment_shader.fs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_text_vertex_shader.vs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\text_vertex_shader.vs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_buttons_def.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\buttons_def.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_ui_vertex_shader.vs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\ui_vertex_shader.vs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_knight.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\knight.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_player_vertex_shader.vs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\player_vertex_shader.vs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_terrain_tileset.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\terrain_tileset.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_player_fragment_shader.fs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\player_fragment_shader.fs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_level2.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\level2.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_knight_img.png.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\knight_img.png"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_new_terrain_tileset.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\new_terrain_tileset.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_terrain.png.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\terrain.png"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_terrain_old.png.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\terrain_old.png"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_level0.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\level0.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_buttons_img.png.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\buttons_img.png"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_tile_map_vertex_shader.vs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\tile_map_vertex_shader.vs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_text_fragment_shader.fs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\text_fragment_shader.fs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_buttons.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\buttons.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_knight_def.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\knight_def.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_terrain_tileset_old.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\terrain_tileset_old.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\raw_ui_fragment_shader.fs.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\raw\\ui_fragment_shader.fs"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\xml_level1.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\xml\\level1.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\drawable_knight_img_old.png.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\drawable\\knight_img_old.png"
+    },
+    {
+        "merged": "D:\\Development\\Android\\Platform\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\Development\\Android\\Platform\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.webp"
+    }
+]

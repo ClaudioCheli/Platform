@@ -1,0 +1,127 @@
+com/cc/platform/time/Timer.java
+ com.cc.platform.time.Timer
+com/cc/platform/physicsEngine/Physics.java
+ com.cc.platform.physicsEngine.Physics
+com/cc/platform/BuildConfig.java
+ com.cc.platform.BuildConfig
+com/cc/platform/animations/UiAnimation.java
+ com.cc.platform.animations.UiAnimation
+com/cc/platform/finiteStateMachines/IdleRightState.java
+ com.cc.platform.finiteStateMachines.IdleRightState
+com/cc/platform/entities/Player.java
+ com.cc.platform.entities.Player
+com/cc/platform/toolBox/Vector3f.java
+ com.cc.platform.toolBox.Vector3f
+com/cc/platform/builder/ButtonBuilder.java
+ com.cc.platform.builder.ButtonBuilder
+com/cc/platform/finiteStateMachines/JumpingRightState.java
+ com.cc.platform.finiteStateMachines.JumpingRightState
+com/cc/platform/animations/playerAnimations/IdleRightAnimation.java
+ com.cc.platform.animations.playerAnimations.IdleRightAnimation
+com/cc/platform/tile/Tile.java
+ com.cc.platform.tile.Tile
+com/cc/platform/entities/Entity.java
+ com.cc.platform.entities.Entity
+com/cc/platform/physicsEngine/Physical.java
+ com.cc.platform.physicsEngine.Physical
+com/cc/platform/finiteStateMachines/PlayerState.java
+ com.cc.platform.finiteStateMachines.PlayerState
+com/cc/platform/communication/Server.java
+ com.cc.platform.communication.Server
+ com.cc.platform.communication.Server$Communication
+com/cc/platform/toolBox/SquareBoundingBox.java
+ com.cc.platform.toolBox.SquareBoundingBox
+com/cc/platform/shaders/UiShader.java
+ com.cc.platform.shaders.UiShader
+com/cc/platform/time/Time.java
+ com.cc.platform.time.Time
+com/cc/platform/shaders/TileMapShader.java
+ com.cc.platform.shaders.TileMapShader
+com/cc/platform/renderEngine/Renderer.java
+ com.cc.platform.renderEngine.Renderer
+com/cc/platform/animations/playerAnimations/IdleLeftAnimation.java
+ com.cc.platform.animations.playerAnimations.IdleLeftAnimation
+com/cc/platform/main/MainActivity.java
+ com.cc.platform.main.MainActivity
+com/cc/platform/text/Text.java
+ com.cc.platform.text.Text
+com/cc/platform/text/TextBatch.java
+ com.cc.platform.text.TextBatch
+com/cc/platform/finiteStateMachines/RunningLeftState.java
+ com.cc.platform.finiteStateMachines.RunningLeftState
+com/cc/platform/shaders/TextShader.java
+ com.cc.platform.shaders.TextShader
+com/cc/platform/finiteStateMachines/JumpingLeftState.java
+ com.cc.platform.finiteStateMachines.JumpingLeftState
+com/cc/platform/toolBox/Vector4f.java
+ com.cc.platform.toolBox.Vector4f
+com/cc/platform/text/TextRenderer.java
+ com.cc.platform.text.TextRenderer
+com/cc/platform/builder/EntityBuilder.java
+ com.cc.platform.builder.EntityBuilder
+com/cc/platform/physicsEngine/PhysicModel.java
+ com.cc.platform.physicsEngine.PhysicModel
+com/cc/platform/tile/TileLevel.java
+ com.cc.platform.tile.TileLevel
+com/cc/platform/terrains/TileMap.java
+ com.cc.platform.terrains.TileMap
+com/cc/platform/camera/Camera.java
+ com.cc.platform.camera.Camera
+com/cc/platform/shaders/Shader.java
+ com.cc.platform.shaders.Shader
+com/cc/platform/shaders/PlayerShader.java
+ com.cc.platform.shaders.PlayerShader
+com/cc/platform/toolBox/Util.java
+ com.cc.platform.toolBox.Util
+com/cc/platform/animations/playerAnimations/JumpingLeftAnimation.java
+ com.cc.platform.animations.playerAnimations.JumpingLeftAnimation
+com/cc/platform/animations/playerAnimations/RunningRightAnimation.java
+ com.cc.platform.animations.playerAnimations.RunningRightAnimation
+com/cc/platform/finiteStateMachines/IdleLeftState.java
+ com.cc.platform.finiteStateMachines.IdleLeftState
+com/cc/platform/text/TextureRegion.java
+ com.cc.platform.text.TextureRegion
+com/cc/platform/toolBox/LineBoundingBox.java
+ com.cc.platform.toolBox.LineBoundingBox
+com/cc/platform/main/mGLSurfaceView.java
+ com.cc.platform.main.mGLSurfaceView
+com/cc/platform/manager/DisplayManager.java
+ com.cc.platform.manager.DisplayManager
+com/cc/platform/textures/Texture.java
+ com.cc.platform.textures.Texture
+com/cc/platform/tile/Tileset.java
+ com.cc.platform.tile.Tileset
+com/cc/platform/text/TextModel.java
+ com.cc.platform.text.TextModel
+com/cc/platform/builder/TileMapBuilder.java
+ com.cc.platform.builder.TileMapBuilder
+com/cc/platform/finiteStateMachines/RunningRightState.java
+ com.cc.platform.finiteStateMachines.RunningRightState
+com/cc/platform/toolBox/Vector2f.java
+ com.cc.platform.toolBox.Vector2f
+com/cc/platform/main/GLRenderer.java
+ com.cc.platform.main.GLRenderer
+com/cc/platform/entities/Button.java
+ com.cc.platform.entities.Button
+com/cc/platform/renderEngine/Renderable.java
+ com.cc.platform.renderEngine.Renderable
+com/cc/platform/builder/EntityCreationDirector.java
+ com.cc.platform.builder.EntityCreationDirector
+com/cc/platform/animations/playerAnimations/RunningLeftAnimation.java
+ com.cc.platform.animations.playerAnimations.RunningLeftAnimation
+com/cc/platform/physicsEngine/Collision.java
+ com.cc.platform.physicsEngine.Collision
+com/cc/platform/toolBox/Input.java
+ com.cc.platform.toolBox.Input
+com/cc/platform/animations/playerAnimations/JumpingRightAnimation.java
+ com.cc.platform.animations.playerAnimations.JumpingRightAnimation
+com/cc/platform/text/Font.java
+ com.cc.platform.text.Font
+com/cc/platform/toolBox/BoundingBox.java
+ com.cc.platform.toolBox.BoundingBox
+com/cc/platform/animations/Animation.java
+ com.cc.platform.animations.Animation
+com/cc/platform/communication/Data.java
+ com.cc.platform.communication.Data
+com/cc/platform/builder/PlayerBuilder.java
+ com.cc.platform.builder.PlayerBuilder
