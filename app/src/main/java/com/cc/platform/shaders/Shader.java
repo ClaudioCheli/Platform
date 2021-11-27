@@ -1,10 +1,10 @@
 package com.cc.platform.shaders;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.util.Log;
 
-import com.cc.platform.main.MainActivity;
 import com.cc.platform.toolBox.Util;
 import com.cc.platform.toolBox.Vector2f;
 import com.cc.platform.toolBox.Vector3f;
@@ -22,15 +22,13 @@ import java.nio.FloatBuffer;
  */
 public abstract class Shader {
 
-    private int programID;
-    private int vertexShaderID;
-    private int fragmentShaderID;
+    private final int programID;
+    private final int vertexShaderID;
+    private final int fragmentShaderID;
 
-    private static FloatBuffer matrixBuffer = Util.createFloatBuffer(16);
-
-    public Shader(int vertexFile, int fragmentFile){
-        vertexShaderID = loadShader(vertexFile, GLES20.GL_VERTEX_SHADER);
-        fragmentShaderID = loadShader(fragmentFile, GLES20.GL_FRAGMENT_SHADER);
+    public Shader(int vertexFile, int fragmentFile, Context context) {
+        vertexShaderID = loadShader(vertexFile, GLES20.GL_VERTEX_SHADER, context);
+        fragmentShaderID = loadShader(fragmentFile, GLES20.GL_FRAGMENT_SHADER, context);
         Util.checkError();
         programID = GLES30.glCreateProgram();
         Util.checkError();
@@ -54,15 +52,15 @@ public abstract class Shader {
         getAllUniformLocations();
     }
 
-    public void start(){
+    public void start() {
         GLES20.glUseProgram(programID);
     }
 
-    public void stop(){
+    public void stop() {
         GLES20.glUseProgram(0);
     }
 
-    public void cleanUp(){
+    public void cleanUp() {
         stop();
         GLES20.glDetachShader(programID, vertexShaderID);
         GLES20.glDetachShader(programID, fragmentShaderID);
@@ -71,29 +69,29 @@ public abstract class Shader {
         GLES20.glDeleteProgram(programID);
     }
 
-    public int getProgramID(){
+    public int getProgramID() {
         return programID;
     }
 
     protected abstract void getAllUniformLocations();
 
-    protected int getUniformLocation(String uniformName){
+    protected int getUniformLocation(String uniformName) {
         //Log.i("error", "program " + programID + " uniform " + uniformName);
         return GLES30.glGetUniformLocation(programID, uniformName);
     }
 
     protected abstract void bindAttributes();
 
-    protected void bindAttribute(int attribute, String variableName){
+    protected void bindAttribute(int attribute, String variableName) {
         GLES20.glBindAttribLocation(programID, attribute, variableName);
     }
 
-    protected void loadInt(int location, int value){
+    protected void loadInt(int location, int value) {
         GLES20.glUniform1i(location, value);
     }
 
 
-    protected void loadFloat(int location, float value){
+    protected void loadFloat(int location, float value) {
         GLES20.glUniform1f(location, value);
     }
 
@@ -101,42 +99,42 @@ public abstract class Shader {
         GLES20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
     }
 
-    protected void loadVector3f(int location, Vector3f vector){
+    protected void loadVector3f(int location, Vector3f vector) {
         GLES20.glUniform3f(location, vector.x, vector.y, vector.z);
     }
 
-    protected void loadVector2f(int location, Vector2f vector){
+    protected void loadVector2f(int location, Vector2f vector) {
         GLES20.glUniform2f(location, vector.x, vector.y);
     }
 
-    protected void loadBoolean(int location, boolean value){
+    protected void loadBoolean(int location, boolean value) {
         float toLoad = 0;
-        if(value){
+        if (value) {
             toLoad = 1;
         }
         GLES20.glUniform1f(location, toLoad);
     }
 
-    protected void loadMatrix(int location, float[] matrix){
+    protected void loadMatrix(int location, float[] matrix) {
         ByteBuffer pointVBB = ByteBuffer.allocateDirect(matrix.length * 4);
         pointVBB.order(ByteOrder.nativeOrder());
-        matrixBuffer = pointVBB.asFloatBuffer();
+        FloatBuffer matrixBuffer = pointVBB.asFloatBuffer();
         matrixBuffer.put(matrix);
         matrixBuffer.position(0);
         GLES20.glUniformMatrix4fv(location, 1, false, matrixBuffer);
     }
 
-    private static int loadShader(int fileId, int type){
+    private int loadShader(int fileId, int type, Context context) {
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
-        try{
-            InputStream inputStream = MainActivity.context.getResources().openRawResource(fileId);
+        try {
+            InputStream inputStream = context.getResources().openRawResource(fileId);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            while((line = reader.readLine()) != null ){
+            while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append("\n");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         String shader = stringBuilder.toString();

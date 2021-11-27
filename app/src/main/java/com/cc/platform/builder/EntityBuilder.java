@@ -12,11 +12,11 @@ public abstract class EntityBuilder {
 
     public Entity getEntity(){return entity;}
 
-    public abstract void createEntity();
-    public abstract void createTile();
-    public abstract void createTileset();
-    public abstract void createAnimation();
-    public abstract void createShader();
-    public abstract void bindBuffers();
+    public abstract EntityBuilder createEntity();
+    public abstract EntityBuilder createTile();
+    public abstract EntityBuilder createTileset();
+    public abstract EntityBuilder createAnimation();
+    public abstract EntityBuilder createShader();
+    public abstract EntityBuilder bindBuffers();
 
 }

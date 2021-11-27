@@ -8,15 +8,15 @@ import com.cc.platform.animations.Animation;
 
 public class RunningRightAnimation extends Animation {
 
-    public RunningRightAnimation(int type, String animationName, int animationLength, int frames[]){
+    public RunningRightAnimation(int type, String animationName, int animationLength, int[] frames) {
         super(type, animationName, animationLength, frames);
         this.frameTime = 200;
     }
 
     @Override
     public void update(long time) {
-        if(time - startTime > frameTime){
-            index = (index+1)%length;
+        if (time - startTime > frameTime) {
+            index = (index + 1) % length;
             currentID = ids[index];
             startTime += frameTime;
         }

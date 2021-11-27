@@ -18,29 +18,33 @@ import java.util.List;
 
 public abstract class PlayerState {
 
-    public static IdleLeftState     idleLeftState       = new IdleLeftState();
-    public static IdleRightState    idleRightState      = new IdleRightState();
-    public static RunningLeftState  runningLeftState    = new RunningLeftState();
-    public static RunningRightState runningRightState   = new RunningRightState();
-    public static JumpingRightState jumpingRightState   = new JumpingRightState();
-    public static JumpingLeftState  jumpingLeftState    = new JumpingLeftState();
+    public static IdleLeftState idleLeftState = new IdleLeftState();
+    public static IdleRightState idleRightState = new IdleRightState();
+    public static RunningLeftState runningLeftState = new RunningLeftState();
+    public static RunningRightState runningRightState = new RunningRightState();
+    public static JumpingRightState jumpingRightState = new JumpingRightState();
+    public static JumpingLeftState jumpingLeftState = new JumpingLeftState();
 
-    protected static IdleRightAnimation     idleRightAnimation;
-    protected static IdleLeftAnimation      idleLeftAnimation;
-    protected static RunningRightAnimation  runningRightAnimation;
-    protected static RunningLeftAnimation   runningLeftAnimation;
-    protected static JumpingRightAnimation  jumpingRightAnimation;
-    protected static JumpingLeftAnimation   jumpingLeftAnimation;
+    protected static IdleRightAnimation idleRightAnimation;
+    protected static IdleLeftAnimation idleLeftAnimation;
+    protected static RunningRightAnimation runningRightAnimation;
+    protected static RunningLeftAnimation runningLeftAnimation;
+    protected static JumpingRightAnimation jumpingRightAnimation;
+    protected static JumpingLeftAnimation jumpingLeftAnimation;
 
     public abstract void enter(Player player);
+
     public abstract PlayerState handleInput(Player player);
+
     public abstract void update(Player player);
+
     public abstract void exit();
+
     public abstract int getAnimationID();
 
-    public static void setAnimations(List<Animation> animations){
-        for(Animation animation : animations){
-            switch (animation.getType()){
+    public static void setAnimations(List<Animation> animations) {
+        for (Animation animation : animations) {
+            switch (animation.getType()) {
                 case Util.ANIMATION_IDLE_RIGHT:
                     idleRightAnimation = (IdleRightAnimation) animation;
                     break;

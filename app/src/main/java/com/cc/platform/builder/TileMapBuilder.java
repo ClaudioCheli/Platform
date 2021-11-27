@@ -1,10 +1,10 @@
 package com.cc.platform.builder;
 
+import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.util.Log;
 
 import com.cc.platform.R;
-import com.cc.platform.main.MainActivity;
 import com.cc.platform.renderEngine.Renderable;
 import com.cc.platform.shaders.TileMapShader;
 import com.cc.platform.terrains.TileMap;
@@ -31,34 +31,38 @@ import java.util.Map;
 
 public class TileMapBuilder {
 
-    private TileMap tileMap;
-
     private static final int TILEMAP_FILE = R.xml.level0;
     private static final int TILEMAP_DEF = R.xml.new_terrain_tileset;
 
-    private XmlResourceParser tileMapDefParser;
-    private XmlResourceParser tileMapFileParser;
+    private final Context context;
 
-    public void createEntity(){
-        tileMap = new TileMap();
+    private TileMap tileMap;
+
+    public TileMapBuilder(Context context) {
+        this.context = context;
     }
 
-    public void createTileset(){
-        tileMapDefParser  = MainActivity.context.getResources().getXml(TILEMAP_DEF);
+    public TileMapBuilder createEntity() {
+        tileMap = new TileMap();
+        return this;
+    }
+
+    public TileMapBuilder createTileset() {
+        XmlResourceParser tileMapDefParser = context.getResources().getXml(TILEMAP_DEF);
         Tileset tileset = null;
         List<Tileset> tilesets = new ArrayList<>();
         Map<Integer, BoundingBox> boundingBoxes = new HashMap<>();
-        int eventType, textureWidth, textureHeight, tileWidth, tileHeight, tileID=0;
+        int eventType, textureWidth, textureHeight, tileWidth, tileHeight, tileID = 0;
         String boxType = "";
-        Vector2f boundingBoxPosition    = new Vector2f();
-        Vector2f boundingBoxDimension   = new Vector2f();
-        Vector2f boundingBoxEndpoints[]   = new Vector2f[2];
-        try{
+        Vector2f boundingBoxPosition = new Vector2f();
+        Vector2f boundingBoxDimension = new Vector2f();
+        Vector2f[] boundingBoxEndpoints = new Vector2f[2];
+        try {
             eventType = tileMapDefParser.getEventType();
-            while(eventType != tileMapDefParser.END_DOCUMENT) {
+            while (eventType != tileMapDefParser.END_DOCUMENT) {
                 if (eventType == tileMapDefParser.START_TAG) {
                     String node = tileMapDefParser.getName();
-                    switch (node){
+                    switch (node) {
                         case "tileset":
                             tileset = new Tileset();
                             textureWidth = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "width"));
@@ -68,17 +72,17 @@ public class TileMapBuilder {
                             tileset.setName(tileMapDefParser.getAttributeValue(null, "name"));
                             tileset.setNumberOfRows(textureHeight / tileHeight);
                             tileset.setNumberOfColumns(textureWidth / tileWidth);
-                            tileset.setTexture(new Texture(R.drawable.terrain));
+                            tileset.setTexture(new Texture(R.drawable.terrain, context));
                             tilesets.add(tileset);
                             break;
                         case "tile":
-                            tileID = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "id"))+1;
+                            tileID = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "id")) + 1;
                             break;
                         case "object":
                             boxType = tileMapDefParser.getAttributeValue(null, "type");
                             boundingBoxPosition.x = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "x"));
                             boundingBoxPosition.y = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "y"));
-                            if(boxType.equalsIgnoreCase("square")) {
+                            if (boxType.equalsIgnoreCase("square")) {
                                 boundingBoxDimension.x = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "width"));
                                 boundingBoxDimension.y = Integer.parseInt(tileMapDefParser.getAttributeValue(null, "height"));
                             }
@@ -97,14 +101,13 @@ public class TileMapBuilder {
                             boundingBoxEndpoints[1].y = Integer.parseInt(coordinate[1]);
                             break;
                     }
-                }else if(eventType == tileMapDefParser.END_TAG){
+                } else if (eventType == tileMapDefParser.END_TAG) {
                     String node = tileMapDefParser.getName();
-                    switch (node){
+                    switch (node) {
                         case "tile":
-                            if(boxType.equalsIgnoreCase("square")) {
+                            if (boxType.equalsIgnoreCase("square")) {
                                 boundingBoxes.put(tileID, new SquareBoundingBox(new Vector2f(boundingBoxPosition), new Vector2f(boundingBoxDimension)));
-                            }
-                            else if(boxType.equalsIgnoreCase("line")) {
+                            } else if (boxType.equalsIgnoreCase("line")) {
                                 boundingBoxes.put(tileID, new LineBoundingBox(new Vector2f(boundingBoxPosition), boundingBoxEndpoints));
                             }
                             break;
@@ -124,10 +127,11 @@ public class TileMapBuilder {
 
         tileMap.setTileset(tilesets);
         Log.i("point", "Tileset created");
+        return this;
     }
 
-    public void createTileLevels(){
-        tileMapFileParser  = MainActivity.context.getResources().getXml(TILEMAP_FILE);
+    public TileMapBuilder createTileLevels() {
+        XmlResourceParser tileMapFileParser = context.getResources().getXml(TILEMAP_FILE);
         TileLevel level = null;
         List<TileLevel> tileLevels = new ArrayList<>();
         String data = "";
@@ -135,15 +139,15 @@ public class TileMapBuilder {
         int eventType;
         try {
             eventType = tileMapFileParser.getEventType();
-            while(eventType != XmlResourceParser.END_DOCUMENT){
+            while (eventType != XmlResourceParser.END_DOCUMENT) {
                 String tagName = tileMapFileParser.getName();
                 switch (eventType) {
                     case XmlResourceParser.START_TAG:
-                        if(tagName.equalsIgnoreCase("map")){
+                        if (tagName.equalsIgnoreCase("map")) {
                             tileWidth = Integer.parseInt(tileMapFileParser.getAttributeValue(null, "tilewidth"));
                             tileHeight = Integer.parseInt(tileMapFileParser.getAttributeValue(null, "tileheight"));
                         }
-                        if(tagName.equalsIgnoreCase("layer")){
+                        if (tagName.equalsIgnoreCase("layer")) {
                             level = new TileLevel();
                             level.setName(tileMapFileParser.getAttributeValue(null, "name"));
                             level.setLevelWidth(Integer.parseInt(tileMapFileParser.getAttributeValue(null, "width")));
@@ -156,9 +160,9 @@ public class TileMapBuilder {
                         data = tileMapFileParser.getText();
                         break;
                     case XmlResourceParser.END_TAG:
-                        if(tagName.equalsIgnoreCase("data")){
+                        if (tagName.equalsIgnoreCase("data")) {
                             level.setData(data);
-                        } else if(tagName.equalsIgnoreCase("layer")){
+                        } else if (tagName.equalsIgnoreCase("layer")) {
                             level.calculatePositions();
                             tileLevels.add(level);
                         }
@@ -174,19 +178,24 @@ public class TileMapBuilder {
 
         tileMap.setTileLevels(tileLevels);
         Log.i("point", "Tile level created");
+        return this;
     }
 
-    public void createShader(){
-        TileMapShader shader = new TileMapShader();
+    public TileMapBuilder createShader() {
+        TileMapShader shader = new TileMapShader(context);
         tileMap.setShader(shader);
         Util.checkError();
+        return this;
     }
 
-    public void bindBuffers(){
+    public TileMapBuilder bindBuffers() {
         tileMap.bindBuffers();
         Util.checkError();
+        return this;
     }
 
-    public Renderable getEntity(){return tileMap;}
+    public Renderable getEntity() {
+        return tileMap;
+    }
 
 }

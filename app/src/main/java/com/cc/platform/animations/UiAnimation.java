@@ -6,9 +6,9 @@ import com.cc.platform.toolBox.Util;
  * Created by Claudio on 09/05/2017.
  */
 
-public class UiAnimation extends Animation{
+public class UiAnimation extends Animation {
 
-    public UiAnimation(int animationLength, int frames[]){
+    public UiAnimation(int animationLength, int[] frames) {
         super(Util.ANIMATION_BUTTON, "button", animationLength, frames);
         setCurrentID(ids[0]);
     }

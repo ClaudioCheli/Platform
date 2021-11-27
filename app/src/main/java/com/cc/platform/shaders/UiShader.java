@@ -1,5 +1,7 @@
 package com.cc.platform.shaders;
 
+import android.content.Context;
+
 import com.cc.platform.R;
 import com.cc.platform.toolBox.Util;
 
@@ -18,8 +20,8 @@ public class UiShader extends Shader {
     private int location_tilesetNumberOfRows;
     private int location_tilesetNumberOfColumns;
 
-    public UiShader() {
-        super(VERTEX_SHADER, FRAGMENT_SHADER);
+    public UiShader(Context context) {
+        super(VERTEX_SHADER, FRAGMENT_SHADER, context);
         Util.checkError();
     }
 

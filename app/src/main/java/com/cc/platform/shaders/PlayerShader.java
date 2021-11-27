@@ -1,5 +1,7 @@
 package com.cc.platform.shaders;
 
+import android.content.Context;
+
 import com.cc.platform.R;
 import com.cc.platform.toolBox.Util;
 
@@ -19,19 +21,19 @@ public class PlayerShader extends Shader {
     private int location_tilesetNumberOfRows;
     private int location_tilesetNumberOfColumns;
 
-    public PlayerShader(){
-        super(VERTEX_SHADER, FRAGMENT_SHADER);
+    public PlayerShader(Context context) {
+        super(VERTEX_SHADER, FRAGMENT_SHADER, context);
         Util.checkError();
     }
 
     @Override
     protected void getAllUniformLocations() {
-        location_modelMatrix 			= super.getUniformLocation("model");
-        location_viewMatrix 			= super.getUniformLocation("view");
-        location_projectionMatrix 		= super.getUniformLocation("projection");
-        location_textureIndex			= super.getUniformLocation("textureIndex");
-        location_tilesetNumberOfRows	= super.getUniformLocation("tilesetNumberOfRows");
-        location_tilesetNumberOfColumns = super.getUniformLocation("tilesetNumberOfColumns");
+        location_modelMatrix = getUniformLocation("model");
+        location_viewMatrix = getUniformLocation("view");
+        location_projectionMatrix = getUniformLocation("projection");
+        location_textureIndex = getUniformLocation("textureIndex");
+        location_tilesetNumberOfRows = getUniformLocation("tilesetNumberOfRows");
+        location_tilesetNumberOfColumns = getUniformLocation("tilesetNumberOfColumns");
         Util.checkError();
     }
 
@@ -42,27 +44,27 @@ public class PlayerShader extends Shader {
         Util.checkError();
     }
 
-    public void loadTextureIndex(int textureIndex){
+    public void loadTextureIndex(int textureIndex) {
         super.loadInt(location_textureIndex, textureIndex);
     }
 
-    public void loadTilesetNumberOfRows(int tilesetNumberOfRows){
+    public void loadTilesetNumberOfRows(int tilesetNumberOfRows) {
         super.loadInt(location_tilesetNumberOfRows, tilesetNumberOfRows);
     }
 
-    public void loadTilesetNumberOfColumns(int tilesetNumberOfColumns){
+    public void loadTilesetNumberOfColumns(int tilesetNumberOfColumns) {
         super.loadInt(location_tilesetNumberOfColumns, tilesetNumberOfColumns);
     }
 
-    public void loadModelMatrix(float[] matrix){
+    public void loadModelMatrix(float[] matrix) {
         super.loadMatrix(location_modelMatrix, matrix);
     }
 
-    public void loadProjectionMatrix(float[] matrix){
+    public void loadProjectionMatrix(float[] matrix) {
         super.loadMatrix(location_projectionMatrix, matrix);
     }
 
-    public void loadViewMatrix(float[] matrix){
+    public void loadViewMatrix(float[] matrix) {
         super.loadMatrix(location_viewMatrix, matrix);
     }
 

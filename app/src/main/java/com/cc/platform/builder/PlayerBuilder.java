@@ -1,5 +1,6 @@
 package com.cc.platform.builder;
 
+import android.content.Context;
 import android.content.res.XmlResourceParser;
 
 import com.cc.platform.R;
@@ -11,8 +12,6 @@ import com.cc.platform.animations.playerAnimations.JumpingRightAnimation;
 import com.cc.platform.animations.playerAnimations.RunningLeftAnimation;
 import com.cc.platform.animations.playerAnimations.RunningRightAnimation;
 import com.cc.platform.entities.Player;
-import com.cc.platform.main.MainActivity;
-import com.cc.platform.physicsEngine.PhysicModel;
 import com.cc.platform.shaders.PlayerShader;
 import com.cc.platform.textures.Texture;
 import com.cc.platform.tile.Tile;
@@ -36,26 +35,30 @@ public class PlayerBuilder extends EntityBuilder {
     private static final int PLAYER_FILE = R.xml.knight;
     private static final int PLAYER_DEF = R.xml.knight_def;
 
-    private XmlResourceParser playerDefParser;
-    private XmlResourceParser playerFileParser;
+    private final Context context;
 
-    @Override
-    public void createEntity() {
-        entity = new Player();
+    public PlayerBuilder(Context context) {
+        this.context = context;
     }
 
     @Override
-    public void createTile() {
-        playerDefParser  = MainActivity.context.getResources().getXml(PLAYER_DEF);
+    public EntityBuilder createEntity() {
+        entity = new Player();
+        return this;
+    }
+
+    @Override
+    public EntityBuilder createTile() {
+        XmlResourceParser playerDefParser = context.getResources().getXml(PLAYER_DEF);
         int eventType = -1;
         int tileWidth = 0;
         int tileHeight = 0;
-        while(eventType != playerDefParser.END_DOCUMENT){
-            if(eventType == playerDefParser.START_TAG){
+        while (eventType != playerDefParser.END_DOCUMENT) {
+            if (eventType == playerDefParser.START_TAG) {
                 String node = playerDefParser.getName();
-                if(node.equals("tileset")){
-                    tileWidth   = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileWidth"));
-                    tileHeight  = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileHeight"));
+                if (node.equals("tileset")) {
+                    tileWidth = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileWidth"));
+                    tileHeight = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileHeight"));
                 }
             }
             try {
@@ -66,31 +69,32 @@ public class PlayerBuilder extends EntityBuilder {
         }
 
         Tile tile = new Tile(new Vector2f(tileWidth, tileHeight));
-        tile.setPosition(new Vector3f(300,768,0));
-        tile.setRotation(new Vector3f(0,0,1), 0);
-        tile.setScale(new Vector3f(1f,1f,1f));
+        tile.setPosition(new Vector3f(300, 768, 0));
+        tile.setRotation(new Vector3f(0, 0, 1), 0);
+        tile.setScale(new Vector3f(1f, 1f, 1f));
 
         entity.setTile(tile);
+        return this;
     }
 
     @Override
-    public void createTileset() {
-        playerDefParser  = MainActivity.context.getResources().getXml(PLAYER_DEF);
+    public EntityBuilder createTileset() {
+        XmlResourceParser playerDefParser = context.getResources().getXml(PLAYER_DEF);
         int eventType = -1;
         int textureWidth = 0, textureHeight = 0, tilesNumber = 0, columns = 0, rows = 0, tileWidth = 0, tileHeight = 0;
         String tilesetName = "";
-        while(eventType != playerDefParser.END_DOCUMENT){
-            if(eventType == playerDefParser.START_TAG){
+        while (eventType != playerDefParser.END_DOCUMENT) {
+            if (eventType == playerDefParser.START_TAG) {
                 String node = playerDefParser.getName();
-                if(node.equals("tileset")){
-                    textureWidth    = Integer.parseInt(playerDefParser.getAttributeValue(null, "width"));
-                    textureHeight   = Integer.parseInt(playerDefParser.getAttributeValue(null, "height"));
-                    tilesNumber     = Integer.parseInt(playerDefParser.getAttributeValue(null, "tilesNumber"));
-                    tileWidth       = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileWidth"));
-                    tileHeight      = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileHeight"));
-                    tilesetName     = playerDefParser.getAttributeValue(null, "name");
-                    columns         = textureWidth/tileWidth;
-                    rows            = textureHeight/tileHeight;
+                if (node.equals("tileset")) {
+                    textureWidth = Integer.parseInt(playerDefParser.getAttributeValue(null, "width"));
+                    textureHeight = Integer.parseInt(playerDefParser.getAttributeValue(null, "height"));
+                    tilesNumber = Integer.parseInt(playerDefParser.getAttributeValue(null, "tilesNumber"));
+                    tileWidth = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileWidth"));
+                    tileHeight = Integer.parseInt(playerDefParser.getAttributeValue(null, "tileHeight"));
+                    tilesetName = playerDefParser.getAttributeValue(null, "name");
+                    columns = textureWidth / tileWidth;
+                    rows = textureHeight / tileHeight;
                 }
             }
             try {
@@ -104,44 +108,45 @@ public class PlayerBuilder extends EntityBuilder {
         tileset.setName(tilesetName);
         tileset.setNumberOfRows(rows);
         tileset.setNumberOfColumns(columns);
-        tileset.setTexture(new Texture(R.drawable.knight_img));
+        tileset.setTexture(new Texture(R.drawable.knight_img, context));
         List<Tileset> tilesets = new ArrayList<>();
         tilesets.add(tileset);
         entity.setTileset(tilesets);
+        return this;
     }
 
     @Override
-    public void createAnimation() {
-        playerFileParser = MainActivity.context.getResources().getXml(PLAYER_FILE);
+    public EntityBuilder createAnimation() {
+        XmlResourceParser playerFileParser = context.getResources().getXml(PLAYER_FILE);
         int eventType = -1;
-        int animationID, animationLength=0, frameID;
-        int frames[] = new int[1];
+        int animationID, animationLength = 0, frameID;
+        int[] frames = new int[1];
         List<Animation> animations = new ArrayList<>();
         Animation idleRight = null;
-        Animation idleLeft  = null;
-        Animation runRight  = null;
-        Animation runLeft   = null;
-        Animation jumpLeft  = null;
+        Animation idleLeft = null;
+        Animation runRight = null;
+        Animation runLeft = null;
+        Animation jumpLeft = null;
         Animation jumpRight = null;
         String animationName = "";
-        while(eventType != playerFileParser.END_DOCUMENT){
-            if(eventType == playerFileParser.START_TAG){
+        while (eventType != playerFileParser.END_DOCUMENT) {
+            if (eventType == playerFileParser.START_TAG) {
                 String node = playerFileParser.getName();
-                if(node.equalsIgnoreCase("animation")){
-                    animationID     = Integer.parseInt(playerFileParser.getAttributeValue(null,"id"));
-                    animationLength = Integer.parseInt(playerFileParser.getAttributeValue(null,"length"));
-                    animationName   = playerFileParser.getAttributeValue(null,"name");
+                if (node.equalsIgnoreCase("animation")) {
+                    animationID = Integer.parseInt(playerFileParser.getAttributeValue(null, "id"));
+                    animationLength = Integer.parseInt(playerFileParser.getAttributeValue(null, "length"));
+                    animationName = playerFileParser.getAttributeValue(null, "name");
                     frames = new int[animationLength];
                 }
-                if(node.equalsIgnoreCase("frame")){
-                    frameID         = Integer.parseInt(playerFileParser.getAttributeValue(null,"id"));
-                    frames[frameID] = Integer.parseInt(playerFileParser.getAttributeValue(null,"subTextureId"));
+                if (node.equalsIgnoreCase("frame")) {
+                    frameID = Integer.parseInt(playerFileParser.getAttributeValue(null, "id"));
+                    frames[frameID] = Integer.parseInt(playerFileParser.getAttributeValue(null, "subTextureId"));
                 }
             }
-            if(eventType == playerFileParser.END_TAG){
+            if (eventType == playerFileParser.END_TAG) {
                 String node = playerFileParser.getName();
-                if(node.equalsIgnoreCase("animation")){
-                    switch (animationName){
+                if (node.equalsIgnoreCase("animation")) {
+                    switch (animationName) {
                         case "idle_left":
                             idleLeft = new IdleLeftAnimation(Util.ANIMATION_IDLE_LEFT, animationName, animationLength, frames);
                             animations.add(idleLeft);
@@ -178,16 +183,19 @@ public class PlayerBuilder extends EntityBuilder {
         }
 
         entity.setAnimation(animations);
+        return this;
     }
 
     @Override
-    public void createShader() {
-        PlayerShader shader = new PlayerShader();
+    public EntityBuilder createShader() {
+        PlayerShader shader = new PlayerShader(context);
         entity.setShader(shader);
+        return this;
     }
 
     @Override
-    public void bindBuffers() {
+    public EntityBuilder bindBuffers() {
         entity.bindBuffers();
+        return this;
     }
 }

@@ -1,6 +1,5 @@
 package com.cc.platform.physicsEngine;
 
-import com.cc.platform.time.Time;
 import com.cc.platform.toolBox.Vector2f;
 
 /**
@@ -18,17 +17,15 @@ public class PhysicModel {
 
 
     public PhysicModel(Vector2f position, Vector2f acceleration) {
-        this.position       = new Vector2f(position);
-        this.currentSpeed   = new Vector2f();
-        this.acceleration   = new Vector2f(acceleration);
-        this.targetSpeed    = new Vector2f();
+        this.position = new Vector2f(position);
+        this.currentSpeed = new Vector2f();
+        this.acceleration = new Vector2f(acceleration);
+        this.targetSpeed = new Vector2f();
     }
 
     public void update() {
-        float currentSpeedX = acceleration.x * targetSpeed.x + (1-acceleration.x)*currentSpeed.x;
-        currentSpeed.x = currentSpeedX;
-        float currentSpeedY = acceleration.y * targetSpeed.y + (1-acceleration.y)*currentSpeed.y;
-        currentSpeed.y = currentSpeedY;
+        currentSpeed.x = acceleration.x * targetSpeed.x + (1 - acceleration.x) * currentSpeed.x;
+        currentSpeed.y = acceleration.y * targetSpeed.y + (1 - acceleration.y) * currentSpeed.y;
         /*Vector2f lastAcceleration = new Vector2f(acceleration);
         Vector2f tmp = Vector2f.scalarMultiply(velocity, Time.getFrameTimeSeconds());
         Vector2f tmp2 = Vector2f.scalarMultiply(lastAcceleration, 0.5f*Time.getFrameTimeSeconds()*Time.getFrameTimeSeconds());

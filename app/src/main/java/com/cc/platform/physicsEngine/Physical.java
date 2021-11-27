@@ -7,9 +7,11 @@ package com.cc.platform.physicsEngine;
 public interface Physical {
 
     PhysicModel getPhysicModel();
+
     void setPhysicModel(PhysicModel model);
 
     void setJumping(boolean jumping);
+
     boolean isJumping();
 
 }

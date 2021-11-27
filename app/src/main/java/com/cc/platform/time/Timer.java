@@ -10,17 +10,17 @@ public class Timer {
 
     private boolean started;
 
-    public Timer(){
+    public Timer() {
         started = false;
     }
 
-    public void start(){
+    public void start() {
         startTime = Time.getCurrentTime();
         started = true;
     }
 
     public long getElapsedTime() {
-        if(started)
+        if (started)
             return Time.getCurrentTime() - startTime;
         return 0;
     }

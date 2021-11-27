@@ -1,88 +1,88 @@
 package com.cc.platform.textures;
 
-import com.cc.platform.main.MainActivity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.GLES20;
+import android.opengl.GLUtils;
+
 import com.cc.platform.toolBox.Util;
 import com.cc.platform.toolBox.Vector2f;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.opengl.GLES20;
-import android.opengl.GLUtils;
-import android.util.Log;
-
 public class Texture {
 
-	//private static int call = 0;
+    //private static int call = 0;
 
-	private int textureID;
-	private Vector2f dimension;
+    private int textureID;
+    private Vector2f dimension;
 
-	public Texture(int resourceID){
+    public Texture(int resourceID, Context context) {
         int[] textureHandle = new int[1];
 
-		GLES20.glGenTextures(1, textureHandle,0);
+        GLES20.glGenTextures(1, textureHandle, 0);
 
-		if(textureHandle[0] != 0){
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inScaled = false;
+        if (textureHandle[0] != 0) {
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inScaled = false;
 
-			final Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.context.getResources(), resourceID, options);
-			dimension = new Vector2f(bitmap.getHeight(), bitmap.getWidth());
+            final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceID, options);
+            dimension = new Vector2f(bitmap.getHeight(), bitmap.getWidth());
 
-			GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 
-			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
 
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 
 
-			GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
-			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-			//Log.i("error", "call " + call); call++;
-			Util.checkError();
-			bitmap.recycle();
-		}
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+            //Log.i("error", "call " + call); call++;
+            Util.checkError();
+            bitmap.recycle();
+        }
 
-		if (textureHandle[0] == 0) {
-			throw new RuntimeException("Error loading texture.");
-		}
+        if (textureHandle[0] == 0) {
+            throw new RuntimeException("Error loading texture.");
+        }
 
-		this.textureID = textureHandle[0];
+        this.textureID = textureHandle[0];
 
-	}
+    }
 
-	public Texture(Bitmap bitmap) {
-		int[] textureHandle = new int[1];
+    public Texture(Bitmap bitmap) {
+        int[] textureHandle = new int[1];
 
-		GLES20.glGenTextures(1, textureHandle, 0);
-		dimension = new Vector2f(bitmap.getHeight(), bitmap.getWidth());
+        GLES20.glGenTextures(1, textureHandle, 0);
+        dimension = new Vector2f(bitmap.getHeight(), bitmap.getWidth());
 
-		if(textureHandle[0] != 0) {
-			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
+        if (textureHandle[0] != 0) {
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
 
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-			GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-			GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
+            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 
-			GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
-			bitmap.recycle();
-		}
+            bitmap.recycle();
+        }
 
-		if(textureHandle[0] == 0) {
-			throw new RuntimeException("Error loading texture.");
-		}
+        if (textureHandle[0] == 0) {
+            throw new RuntimeException("Error loading texture.");
+        }
 
-		this.textureID = textureHandle[0];
-	}
+        this.textureID = textureHandle[0];
+    }
 
-	public int getTextureID(){return textureID;}
+    public int getTextureID() {
+        return textureID;
+    }
 
 
 }

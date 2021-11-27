@@ -1,5 +1,7 @@
 package com.cc.platform.shaders;
 
+import android.content.Context;
+
 import com.cc.platform.R;
 import com.cc.platform.toolBox.Util;
 
@@ -17,8 +19,8 @@ public class TileMapShader extends Shader {
     private int location_tilesetNumberOfRows;
     private int location_tilesetNumberOfColumns;
 
-    public TileMapShader(){
-        super(VERTEX_SHADER, FRAGMENT_SHADER);
+    public TileMapShader(Context context){
+        super(VERTEX_SHADER, FRAGMENT_SHADER, context);
     }
 
     @Override

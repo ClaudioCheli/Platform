@@ -9,3 +9,4 @@
 old
 .idea
 /gradle/wrapper
+/app/build

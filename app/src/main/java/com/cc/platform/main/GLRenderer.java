@@ -10,8 +10,6 @@ import com.cc.platform.builder.EntityCreationDirector;
 import com.cc.platform.builder.PlayerBuilder;
 import com.cc.platform.builder.TileMapBuilder;
 import com.cc.platform.camera.Camera;
-import com.cc.platform.communication.Data;
-import com.cc.platform.communication.Server;
 import com.cc.platform.entities.Button;
 import com.cc.platform.entities.Player;
 import com.cc.platform.physicsEngine.PhysicModel;
@@ -29,9 +27,7 @@ import com.cc.platform.toolBox.Vector2f;
 import com.cc.platform.toolBox.Vector3f;
 import com.cc.platform.toolBox.Vector4f;
 
-
 import java.math.RoundingMode;
-import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,26 +44,23 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     private Renderer renderer;
     private TextRenderer textRenderer;
 
-    private Physics physics;
+    private final Physics physics;
 
     private int width;
     private int height;
 
-    private List<Renderable> renderables = new ArrayList<>();
-    private List<Physical> physical = new ArrayList<>();
-    private List<Button> buttons = new ArrayList<>();
+    private final List<Renderable> renderables = new ArrayList<>();
+    private final List<Physical> physical = new ArrayList<>();
+    private final List<Button> buttons = new ArrayList<>();
     private TileMap tileMap;
     private Player player;
 
-    private float x, y;
-
     private Camera camera;
 
-    private Server server;
+//    private Server server;
 
-    private Context context;
+    private final Context context;
 
-    private Font roboto;
     List<Text> texts = new ArrayList<>();
     Text forceInfo;
     Text accelerationInfo;
@@ -96,20 +89,20 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 //        new Thread(server).start();
 
         Log.i("point", "Creating tileMap");
-        TileMapBuilder tileMapBuilder = new TileMapBuilder();
-        tileMapBuilder.createEntity();
-        tileMapBuilder.createTileset();
-        tileMapBuilder.createTileLevels();
-        tileMapBuilder.createShader();
-        tileMapBuilder.bindBuffers();
-        renderables.add(tileMapBuilder.getEntity());
-        tileMap = (TileMap) tileMapBuilder.getEntity();
+        tileMap = (TileMap) new TileMapBuilder(context)
+                .createEntity()
+                .createTileset()
+                .createTileLevels()
+                .createShader()
+                .bindBuffers()
+                .getEntity();
+        renderables.add(tileMap);
         Util.checkError();
         Log.i("point", "tileMap created");
 
         Log.i("point", "Creating player");
         EntityCreationDirector director = new EntityCreationDirector();
-        director.setEntityBuilder(new PlayerBuilder());
+        director.setEntityBuilder(new PlayerBuilder(context));
         director.createEntity();
         player = (Player) director.getEntity();
         player.setPhysicModel(new PhysicModel(player.getPosition(), new Vector2f(0.8f, 0.5f)));
@@ -120,24 +113,24 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Log.i("point", "player Created");
 
         Log.i("point", "Creating buttons");
-        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_LEFT));
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_LEFT, context));
         director.createEntity();
         renderables.add(director.getEntity());
         buttons.add((Button) director.getEntity());
         Log.i("point", "button 1 created");
-        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_RIGHT));
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_RIGHT, context));
         director.createEntity();
         renderables.add(director.getEntity());
         buttons.add((Button) director.getEntity());
         Log.i("point", "button 2 created");
-        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_UP));
+        director.setEntityBuilder(new ButtonBuilder(Util.BUTTON_UP, context));
         director.createEntity();
         renderables.add(director.getEntity());
         buttons.add((Button) director.getEntity());
         Log.i("point", "button 3 created");
         Log.i("point", "buttons created");
 
-        roboto = new Font(context.getAssets(), "Roboto-Regular.ttf", 50, new Vector2f(2, 2));
+        Font roboto = new Font(context.getAssets(), "Roboto-Regular.ttf", 50, new Vector2f(2, 2));
 
         forceInfo = new Text("", new Vector2f(50, 50), new Vector4f(1, 1, 1, 1), roboto);
         accelerationInfo = new Text("", new Vector2f(50, 100), new Vector4f(1, 1, 1, 1), roboto);
@@ -157,10 +150,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         camera = new Camera(new Vector3f(0, 0, 0), new Vector3f(0, 0, -1), new Vector3f(0, 1, 0));//forceInfo, look, up
-        x = 0;
-        y = 0;
+
         renderer = new Renderer(width, height);
-        textRenderer = new TextRenderer();
+        textRenderer = new TextRenderer(context);
 
         Time.start();
         Log.i("point", "GLRenderer: surfaceCreated");
@@ -188,10 +180,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         accelerationInfo.setText("Ax: " + df.format(model.getAcceleration().x) + " Ay: " + df.format(model.getAcceleration().y));
         velocityInfo.setText("Vx: " + df.format(model.getCurrentSpeed().x) + " Vy: " + df.format(model.getCurrentSpeed().y));
         positionInfo.setText("Px: " + df.format(model.getPosition().x) + " Py: " + df.format(model.getPosition().y));
-        camera.move(new Vector3f(playerPosition.x - width / 2, playerPosition.y - height / 2, 0));
+        camera.move(new Vector3f(playerPosition.x - (float) width / 2, playerPosition.y - (float) height / 2, 0));
 
-        for (Renderable renderable : renderables)
+        for (Renderable renderable : renderables) {
             renderable.handleInput();
+        }
         collisionText.setText(Boolean.toString(physics.update(physical, tileMap)));
         renderer.render(renderables, camera);
 

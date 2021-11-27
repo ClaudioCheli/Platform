@@ -1,5 +1,6 @@
 package com.cc.platform.text;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -27,8 +28,8 @@ public class TextRenderer {
     private TextShader shader;
     private TextBatch batch;
 
-    public TextRenderer() {
-        this.shader = new TextShader();
+    public TextRenderer(Context context) {
+        this.shader = new TextShader(context);
 
         batch = new TextBatch(CHAR_BATCH_SIZE);
     }

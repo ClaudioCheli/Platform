@@ -8,7 +8,7 @@ import com.cc.platform.animations.Animation;
 
 public class JumpingLeftAnimation extends Animation {
 
-    public JumpingLeftAnimation(int type, String animationName, int animationLength, int frames[]){
+    public JumpingLeftAnimation(int type, String animationName, int animationLength, int[] frames) {
         super(type, animationName, animationLength, frames);
     }
 

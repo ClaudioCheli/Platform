@@ -1,28 +1,19 @@
 package com.cc.platform.main;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-
-import com.cc.platform.communication.Server;
 
 /**
  * Created by Claudio on 28/05/2016.
  */
 public class MainActivity extends Activity {
 
-    public static Context context;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        context = this;
 
         // Set full screen view
         View decorView = getWindow().getDecorView();
@@ -42,17 +33,15 @@ public class MainActivity extends Activity {
 
         mGLSurfaceView mGLView = new mGLSurfaceView(this, width, height);
         setContentView(mGLView);
-
-
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
     }
 

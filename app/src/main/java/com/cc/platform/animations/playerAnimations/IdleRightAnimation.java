@@ -9,17 +9,15 @@ import com.cc.platform.animations.Animation;
 
 public class IdleRightAnimation extends Animation {
 
-    private float frameTime = 200;
-
-    public IdleRightAnimation(int type, String animationName, int animationLength, int frames[]){
+    public IdleRightAnimation(int type, String animationName, int animationLength, int[] frames) {
         super(type, animationName, animationLength, frames);
         this.frameTime = 200;
     }
 
     @Override
     public void update(long time) {
-        if(time - startTime > frameTime){
-            index = (index+1)%length;
+        if (time - startTime > frameTime) {
+            index = (index + 1) % length;
             currentID = ids[index];
             startTime += frameTime;
         }

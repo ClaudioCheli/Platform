@@ -1,5 +1,7 @@
 package com.cc.platform.shaders;
 
+import android.content.Context;
+
 import com.cc.platform.R;
 import com.cc.platform.toolBox.Vector4f;
 
@@ -17,8 +19,8 @@ public class TextShader extends Shader {
     private int location_projectionMatrix;
     private int location_color;
 
-    public TextShader() {
-        super(VERTEX_SHADER, FRAGMENT_SHADER);
+    public TextShader(Context context) {
+        super(VERTEX_SHADER, FRAGMENT_SHADER, context);
     }
 
     @Override

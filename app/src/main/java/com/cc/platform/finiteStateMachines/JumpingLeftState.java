@@ -14,8 +14,8 @@ import com.cc.platform.toolBox.Vector2f;
 
 public class JumpingLeftState extends PlayerState {
 
-    private boolean buttonLeftPressed   = false;
-    private boolean buttonRightPressed  = false;
+    private boolean buttonLeftPressed = false;
+    private boolean buttonRightPressed = false;
     private Timer timer;
 
     @Override
@@ -24,30 +24,30 @@ public class JumpingLeftState extends PlayerState {
         timer = new Timer();
         timer.start();
         jumpingLeftAnimation.start(Time.getCurrentTime());
-        player.getPhysicModel().setTargetSpeed(new Vector2f(player.getPhysicModel().getTargetSpeed().x,-Physics.VERTICAL_FORCE));
+        player.getPhysicModel().setTargetSpeed(new Vector2f(player.getPhysicModel().getTargetSpeed().x, -Physics.VERTICAL_FORCE));
     }
 
     @Override
     public PlayerState handleInput(Player player) {
-        if(Input.isKeyDown(Util.BUTTON_LEFT)){
+        if (Input.isKeyDown(Util.BUTTON_LEFT)) {
             buttonLeftPressed = true;
-        }else if(Input.isKeyUp(Util.BUTTON_LEFT)){
+        } else if (Input.isKeyUp(Util.BUTTON_LEFT)) {
             buttonLeftPressed = false;
         }
-        if(Input.isKeyDown(Util.BUTTON_RIGHT)) {
+        if (Input.isKeyDown(Util.BUTTON_RIGHT)) {
             buttonRightPressed = true;
-        } else if(Input.isKeyUp(Util.BUTTON_RIGHT)) {
+        } else if (Input.isKeyUp(Util.BUTTON_RIGHT)) {
             buttonRightPressed = false;
         }
-        if(Input.isKeyUp(Util.BUTTON_RIGHT) && Input.isKeyUp(Util.BUTTON_LEFT) && Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()){
+        if (Input.isKeyUp(Util.BUTTON_RIGHT) && Input.isKeyUp(Util.BUTTON_LEFT) && Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()) {
             exit();
             return idleLeftState;
         }
-        if(Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()){
+        if (Input.isKeyUp(Util.BUTTON_UP) && !player.isJumping()) {
             exit();
             return idleLeftState;
         }
-        if(!player.isJumping() && !player.isJumping()){
+        if (!player.isJumping() && !player.isJumping()) {
             exit();
             return idleLeftState;
         }
@@ -66,11 +66,11 @@ public class JumpingLeftState extends PlayerState {
         /*if(timer.getElapsedTime() < 500) {
             player.getPhysicModel().setTargetSpeed(new Vector2f(player.getPhysicModel().getTargetSpeed().x,-Physics.VERTICAL_FORCE));
         }*/
-        if(buttonLeftPressed)
+        if (buttonLeftPressed)
             player.getPhysicModel().setTargetSpeed(new Vector2f(-Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
-        if(buttonRightPressed)
+        if (buttonRightPressed)
             player.getPhysicModel().setTargetSpeed(new Vector2f(Physics.HORIZONTAL_FORCE, player.getPhysicModel().getTargetSpeed().y));
-        if(!buttonLeftPressed && !buttonRightPressed)
+        if (!buttonLeftPressed && !buttonRightPressed)
             player.getPhysicModel().setTargetSpeed(new Vector2f(0, player.getPhysicModel().getTargetSpeed().y));
         jumpingLeftAnimation.start(Time.getCurrentTime());
     }
